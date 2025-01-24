@@ -1,0 +1,72 @@
+
+# Splash Screen
+
+The Splash Screen is a React Native component that serves as the entry point of the application, ensuring a smooth and engaging user experience while essential app configurations and data retrieval tasks are performed. This document provides an overview of the code structure, functionality, and significant elements of the Splash Screen.
+
+<figure> <img src="/img/inventory/splash.png" alt="This is an example image  of Splash Screen" width="300" height="600" /></figure>
+
+## Overview
+
+The Splash Screen:
+
+- Displays an animated splash screen with the app logo and build version.
+- Configures and retrieves device-specific data such as time zone and unique device ID.
+- Determines navigation flow based on user authentication status.
+- Logs analytics events for user activity tracking.
+
+## Key Features
+
+- **Animated Transition**: Fades in the app logo for a polished visual effect.
+- **Device Configuration**: Retrieves or generates a unique device ID and sets the time zone.
+- **Authentication Check**: Determines navigation to the main app or login screen.
+- **Analytics Integration**: Logs app open events and device-specific details.
+- **Permissions**: Requests user tracking permissions for analytics.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Redux**: seAppSelector for state selection.
+- **Services**: AnalyticsService for event logging.
+- **Utilities**: Permissions, colors, normalize, network.
+- **Libraries**: react-native-splash-screen, react-native-async-storage/async-storage, and react-native-get-random-values.
+
+### State Management
+
+The screen uses a simple reducer hook, useSimpleReducer, to manage component state:
+
+```javascript
+const opacity = useRef(new Animated.Value(0)).current;
+const tokenRef = useRef(token);
+
+useEffect(() => {
+  tokenRef.current = token;
+}, [token]);
+```
+### Core Functions
+
+- **getDeviceId**: Retrieves or generates a unique device ID and logs it with analytics.
+- **getTimeZone**: Retrieves the device's time zone and logs it with analytics.
+- **getData**: Coordinates data retrieval, device configuration, and navigation flow.
+- **Animated.timing**: Handles the fade-in animation of the splash screen logo.
+
+### Analytics
+
+Logs key user events like app opening and device ID setup through AnalyticsService.
+
+## Navigation
+
+- **getDeviceId**: Navigates to the Home Screen.
+- **Unauthenticated Users**: Navigates to the Login Screen.
+- **Navigation Handling**: Uses the reset method from @checkpoint/utils/navigationService.
+
+
+
+## Conclusion
+
+The Splash Screen provides an elegant introduction to the application while handling critical background tasks such as device configuration, analytics, and navigation. Its design ensures both functionality and user engagement.
+
+
+

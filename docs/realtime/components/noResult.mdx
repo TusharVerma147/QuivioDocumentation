@@ -1,0 +1,57 @@
+
+# No Result
+
+The No Result component is a simple and reusable UI element designed to display a message when no results are available. It integrates seamlessly into the application and supports customization for different use cases.
+
+## Usage
+
+### Example Image
+
+<figure> <img src="/img/inventory/noResult.png" alt="This is an example image  of SquareCard" width="300" height="600" /></figure>
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import NoResult from './NoResult';
+
+const App = () => (
+  <NoResult title="No Result Found" />
+);
+
+export default App;
+```
+
+## Props
+
+| Prop Name                | Type        | Default         | Description                                             |
+| ------------------------ | ----------- | --------------- | ------------------------------------------------------- |
+| `title`              | `string` | `en.No_Result`                  | The text message to display when no results are available.                   |
+| `containerStyle`          | `Object`      |  `{}`   |  Custom styles for the container element.                                |
+| `textProps`          | `Object`    | `{}`      |  Additional props to be passed to the text component. |  
+
+## Features
+
+- **Customizable Message**: The title prop allows you to specify a custom message.
+- **Flexible Styling**:  Use the containerStyle prop to apply custom styles to the container.
+- **Text Customization**:  Extend functionality with the textProps prop to pass additional settings to the text component.
+- **Responsive Design**: The component adapts to various screen sizes with the help of utility functions like getHp.
+
+### Customizing the NoResult Component
+
+```javascript
+< NoResult
+  title="No data to display"
+  containerStyle={customStyles}
+  textProps={{ fontSize: 16, fontWeight: 'bold' }}
+/>
+```
+
+## Notes
+
+
+- Ensure the onPressButton prop is passed to handle the refresh button's functionality.
+- Utilize the textProps prop for additional configurations like font size, weight, or alignment.
+
+
+

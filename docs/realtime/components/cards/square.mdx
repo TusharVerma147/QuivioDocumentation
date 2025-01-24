@@ -1,0 +1,88 @@
+
+# Square
+
+The SquareCard component is a versatile UI element designed for dynamic display of information in a square card format. It supports a variety of layouts and customization options, ensuring a seamless user experience across devices, including tablets.
+
+## Usage
+
+### Example Image
+
+<figure> <img src="/img/inventory/square.png" alt="This is an example image  of SquareCard" width="300" height="600" /></figure>
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import SquareCard from './SquareCard';
+
+const App = () => {
+  return (
+    <SquareCard
+      text="Card Text"
+      title="Card Title"
+      spanText="Span Text"
+      rightText="Right Text"
+      bottomText="Bottom Text"
+      description="Description Text"
+      headerIcon={require('./path-to-header-icon.png')}
+      rightIcon={require('./path-to-right-icon.png')}
+      bottomIcon={require('./path-to-bottom-icon.png')}
+      onPress={() => console.log('SquareCard pressed!')}
+    />
+  );
+};
+
+export default App;
+```
+
+## Props
+
+| Prop Name            | Type          | Default               | Description                                                |
+| -------------------- | ------------- | --------------------- | ---------------------------------------------------------- |
+| `text`              | `string`      | `''`                  | Main text content displayed within the card.                      |
+| `title`              | `string`      | `''`                  | Title text displayed prominently.                          |
+| `onPress`           | `function` | `null`           |Callback function triggered on card press.       |
+| `spanText`              | `string`      | `''`                  | Highlighted text span displayed alongside the main text.                     |
+| `rightIcon`          | `ImageSource` | `null`           | Icon to display on the right side of the card.      |
+| `rightText`              | `string`      | `''`                  | Text displayed alongside the right icon.   |
+| `description`          | `string`      | `''`                  | Additional description text.                    |
+| `bottomText`          | `string`      | `''`                  | Footer text displayed at the bottom of the card.                   |
+| `headerIcon`          | `ImageSource` | `null`           | Icon displayed at the header.  |
+| `containerStyle`          | `object`      | `{}`   | Custom styling for the container.                                     |
+| `titleStyle` | `object`      | `{}`           | Custom styling for the title text.container.                           |
+| `headerIconStyle` | `object`      | `{}`           | Custom styling for the header icon.container.                           |
+| `rightIconStyle` | `object`      | `{}`           |  Custom styling for the right icon.                          |
+| `descriptionStyle` | `object`      | `{}`           | Custom styling for the description text.                           |
+| `bottomIconStyle` | `object`      | `{}`           |  Custom styling for the footer icon.                          |
+| `bottomTextStyle` | `object`      | `{}`           | Custom styling for the footer text.                           |
+| `rightTextStyle` | `object`      | `{}`           | Custom styling for the right text.                           |
+
+## Features
+
+- **Responsive Design**: Optimized layouts for tablet and mobile screens.
+- **Dynamic Content**: Supports a variety of content configurations, including text, icons, and images.
+- **Customizable Styles**: Easily override default styles with custom styles for any part of the component.
+- **Interactive**: Includes an onPress callback for handling user interactions.
+
+### Customizing the Square Card
+
+```javascript
+<SquareCard
+  text="Custom Text"
+  title="Custom Title"
+  onPress={() => console.log('Custom Card Pressed')}
+  bottomText="Additional Info"
+  headerIcon={require('../assets/custom-header-icon.png')}
+  bottomIcon={require('../assets/custom-footer-icon.png')}
+  containerStyle={{ backgroundColor: '#f0f0f0', padding: 10 }}
+  titleStyle={{ fontSize: 20, color: '#333' }}
+  bottomTextStyle={{ color: 'blue' }}
+/>
+```
+
+## Notes
+
+
+- Ensure all required props are provided for accurate rendering.
+- For better performance on different screen sizes, use device-specific styles (e.g., isTablet).
+- Images used for icons should have appropriate dimensions to fit seamlessly within the design.

@@ -1,0 +1,99 @@
+
+# FullWidthCard
+
+The FullWidthCard component is a versatile and visually appealing UI element designed for displaying detailed information alongside a bar graph. It offers flexibility in customization and dynamic integration into your app.
+
+## Usage
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import FullWidthCard from './FullWidthCard';
+
+const graphData = [
+  { value: 10 },
+  { value: 20 },
+  { value: 15 },
+  { value: 25 },
+];
+
+const App = () => (
+  <FullWidthCard
+    title="Performance"
+    text="75%"
+    description="This Week"
+    rightText="Target: 90%"
+    spanText="+5% Increase"
+    headerIcon={require('../assets/icon.png')}
+    graphData={graphData}
+    onPress={() => console.log('Card Pressed')}
+  />
+);
+
+export default App;
+```
+
+## Props
+
+| Prop Name            | Type          | Default               | Description                                                |
+| -------------------- | ------------- | --------------------- | ---------------------------------------------------------- |
+| `title`              | `string`      | `''`                  | The main title text of the card.                         |
+| `text`              | `string`      | `''`                  | Highlighted text displayed prominently on the card.                         |
+| `textStyle` | `object`      | `{}`           | Custom styling for the main text.container.                           |
+| `description`          | `string`      | `''`                  | Descriptive text displayed below the title or main text.                   |
+| `rightText`              | `string`      | `''`                  | Text displayed on the right-hand side of the card.  |
+| `rightTextStyle` | `object`      | `{}`           | Custom styling for the right text.                           |
+| `spanText`              | `string`      | `''`                  | Additional text displayed alongside the description.                    |
+| `headerIcon`          | `ImageSource` | `null`           | Icon displayed at the top left of the card. |
+| `onPress`           | `function` | `null`           | Callback function triggered on card press.       |
+| `graphData`          | `Array` | `{}`           | Data to render in the bar graph.   |
+| `containerStyle`          | `object`      | `{}`   | Custom styling for the root container.                                     |
+| `headerIconStyle` | `object`      | `{}`           | Custom styling for the header icon.container.                           |
+| `descriptionStyle` | `object`      | `{}`           | Custom styling for the description text.                           |
+| `spanTextStyle` | `object`      | `{}`           | Custom styles for the spanText.                        |
+| `rightChildContainer` | `object`      | `{}`           |  Custom styles for the right-side container housing the graph.                        |
+| `rest` | `object`      | `{}`           | Additional props passed to the Bounceable component.                           |
+
+## Features
+
+- **Dynamic Graph Display**: Integrates a customizable bar graph to visually represent data.
+- **Flexible Customization**: All texts, styles, and layouts can be tailored to fit your app's theme.
+- **Interactive Design**: Supports press events via the onPress prop.
+- **Icon Integration**: Displays a header icon for branding or additional context.
+
+## Methods and Utilities
+
+The component utilizes several utility functions for enhanced functionality:
+
+- **`BarGraph Component:`**: The bar graph is rendered using the BarGraph component from @checkpoint/components/Graphs.
+- Supports custom bar width, spacing, and focused bar configuration.
+- **`normalize(value)`**: Ensures consistent sizing across devices.
+- **`colors`**: Provides pre-defined color values to maintain design consistency.
+
+### Customizing the FullWidthCard
+
+```javascript
+<FullWidthCard
+  title="Activity"
+  text="80%"
+  description="Overall Progress"
+  spanText="+10%"
+  headerIcon={require('../assets/activity-icon.png')}
+  graphData={[
+    { value: 5 },
+    { value: 15 },
+    { value: 25 },
+    { value: 35 },
+  ]}
+  containerStyle={{ backgroundColor: '#f0f0f0', padding: 16 }}
+  onPress={() => alert('Activity Card Pressed')}
+/>
+```
+
+## Notes
+
+
+- Ensure graphData is a valid array of objects containing numerical value properties.
+- The component is optimized for both Android and iOS devices.
+- Use the rightChildContainer prop to customize the layout or content of the right-side container.

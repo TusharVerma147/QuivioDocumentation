@@ -1,0 +1,60 @@
+
+# Employees
+
+The Employees Screen provides detailed performance metrics for individual employees, helping users track and evaluate their contributions.
+
+<figure> <img src="/img/inventory/employees.png" alt="This is an example image  of Employees" width="300" height="600" /></figure>
+
+## Overview
+
+The Employees Screen allows users to:
+
+- View detailed metrics for each employee.
+- Highlight achievements and identify areas for improvement.
+
+## Key Features
+
+- **Employee Profiles**: Displays detailed stats for individual employees.
+- **Metrics**: Tracks performance indicators like hours worked and sales contributions.
+- **Filters**: Allows filtering by team or role.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Profile Card Components**:For displaying employee details.
+- **Redux**: employeeMetricsReducer for managing state.
+
+### State Management
+
+The screen uses Redux to manage state:
+
+```javascript
+const initialState = {
+  employeeMetricsData: [],
+  isLoading: false,
+  error: null,
+};
+```
+### Event Handlers
+
+- **refreshEmployeeMetrics**: Fetches updated metrics from the server.
+
+### API Integration
+
+- **getEmployeeMetrics API**: Retrieves detailed employee data.
+
+## Navigation
+
+Accessible from the dashboard with links to individual employee profiles.
+
+## Conclusion
+
+The Employees Screen provides a comprehensive view of employee performance, supporting better decision-making and workforce management.
+
+
+
+
+

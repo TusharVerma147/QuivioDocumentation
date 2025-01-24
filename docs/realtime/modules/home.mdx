@@ -1,0 +1,106 @@
+
+# Home
+
+The Home Screen is a React Native component designed to display key site statistics and a list of car washes. It allows users to view site data, refresh information, and sort the displayed car washes. The component interacts with APIs to fetch and update data dynamically. This document provides an overview of the code structure, functionality, and important elements of the Home Screen.
+
+<figure> <img src="/img/inventory/home.png" alt="This is an example image  of Home Screen" width="300" height="600" /></figure>
+
+## Overview
+
+The Home Screen allows users to:
+
+- View site statistics, including car washes, memberships, net sales, and labor count.
+- Refresh data using pull-to-refresh functionality.
+- Sort the car washes list by various criteria.
+- Interact with a modal to select sorting options.
+- Display dynamic header images based on the time of day.
+- View car washes data with details such as site, car count, labor percentage, and membership count.
+
+## Key Features
+
+- **Site Statistics**: Displays current statistics for car washes, memberships, net sales, and labor count with dynamic values.
+- **Pull-to-Refresh**: Users can refresh data by pulling down on the screen.
+- **Sorting**: Allows sorting of car wash data based on various criteria such as car count and labor percentage.
+- **Dynamic Header**: The header image and color change based on the time of day.
+- **API Integration**: Fetches and updates data from APIs related to current stats and car washes.
+- **Custom Table**: Displays a sortable table of car wash data with additional details.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Custom Components**: HomeHeader, CustomListTable, CurrentStats, CustomLoader, SheetWithBasicSelectors.
+- **Hooks**: useAppSelector, useAppThunkDispatch, useSimpleReducer, useBackHandler, useFocusEffect.
+- **Redux**: getSiteListing, getCurrentStats, getCarWashesData, userReducer.
+- **Services**: AnalyticsService, ModalController.
+- **Utilities**: colors, commonStyles, screenNames, addCommasToMoneyValue, getComparisonColumColor, sortArray, getPartOfDay, normalize.
+- **Third-party Libraries**: ImageBackground, ScrollView, StatusBar, RefreshControl, ToastAndroid, BackHandler.
+
+### State Management
+
+The screen uses the useSimpleReducer hook to manage the component's state:
+
+```javascript
+const initialState = {
+  page: 1,
+  limit: 50,
+  carWashesData: [],
+  isLoading: false,
+  headerImage: '',
+  isRefreshing: false,
+  currentStatsData: defaultCurrentStat,
+  headerColor: colors.white10,
+  sortFilter: {},
+};
+
+const [state, updateState] = useSimpleReducer(initialState);
+```
+### Event Handlers
+
+- **handleRefresh**: Triggered by the pull-to-refresh gesture to reload data (site listing, car washes, and current stats).
+- **onPressOrder**:  Opens a bottom sheet for sorting options using ModalController.thentication process, including API call, error handling, and state updates.
+- **onPressOptions**:  Placeholder function for additional options on the car washes list.
+
+### API Integration
+
+- **getSiteListAPI**: Fetches site listing data.
+- **getData**:   Fetches current statistics and updates the UI.
+- **getCarWashes**:  Fetches the car wash data and updates the list.
+- **gupdateSiteListing**: Updates the site listing based on the selected location.
+
+### Analytics
+
+Logs events for API call successes and failures using AnalyticsService:ice.
+
+```javascript
+AnalyticsService.logEvent(EVENTS.ALL_SITE_STATS_SUCCESS);
+AnalyticsService.logEvent(EVENTS.ALL_SITE_HOME_SUCCESS, { ...payload });
+AnalyticsService.logEvent(EVENTS.ALL_SITE_STATS_FAILED, {
+  error: error?.message,
+});
+AnalyticsService.logEvent(EVENTS.ALL_SITE_HOME_FAILED, {
+  error: error?.message,
+  ...payload,
+});
+```
+### Custom Hooks
+
+- **useBackHandler**: Handles Android back button press to show a confirmation message before exiting the app.
+
+### Dynamic Header Styling
+
+The header image and color are updated based on the current time using the updateHeaderStyle function.
+
+## Navigation
+
+On interaction with the sorting options, a modal opens to allow the user to select sorting criteria.
+
+
+## Conclusion
+
+The Home Screen provides a comprehensive overview of site statistics and car washes data with dynamic elements and interactive features. It integrates smoothly with APIs, supports sorting and refreshing, and provides a personalized user experience based on time of day and selected location.
+
+
+

@@ -1,0 +1,56 @@
+# No Internet 
+
+The No Internet component is a user-friendly UI element designed to display a message when there is no internet connection. It provides a visually appealing background, informative text, and a refresh button to prompt users to retry connecting.
+
+## Usage
+
+### Example Image
+
+<figure> <img src="/img/inventory/noInternet.png" alt="This is an example image  of No Internet" width="300" height="600" /></figure>
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import NoInternet from './NoInternet';
+
+const App = () => {
+  const handleRefresh = () => {
+    console.log('Refresh button pressed!');
+  };
+
+  return <NoInternet onPressButton={handleRefresh} />;
+};
+
+export default App;
+```
+
+## Props
+
+| Prop Name            | Type          | Default               | Description                                                |
+| -------------------- | ------------- | --------------------- | ---------------------------------------------------------- |
+| `onPressButton`           | `function` | `null`           | Callback function triggered when the button is pressed.   |
+
+## Features
+
+- **Customizable Button**: Includes a refresh button with a callback for custom functionality.
+- **Localized Text**:  Displays informative text from a localization file (e.g., en.No_Internet, en.No_Internet_Description).
+- **Responsive Design**: Adapts to different screen sizes using utilities like getHp.
+
+### Customizing the NoInternet Component
+
+```javascript
+<NoInternet
+  onPressButton={() => console.log('No Internet Found')}
+/>
+```
+
+## Notes
+
+
+- Ensure the onPressButton prop is passed to handle the refresh button's functionality.
+- The component relies on localization for text. Verify the en localization file includes   No_Internet and No_Internet_Description keys.
+- The images object should contain valid image sources for backgroundWrapper and noInternet to avoid rendering issues.
+- Styles can be customized by modifying the styles object in the corresponding stylesheet.
+
+

@@ -1,0 +1,68 @@
+
+# ServicesCard
+
+The ServicesCard component is a flexible UI element designed for displaying service-related information in a visually appealing card format. It allows customization of layout, styles, and interactivity, ensuring a consistent user experience across devices.
+
+## Usage
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import ServicesCard from './ServicesCard';
+
+const App = () => {
+  return (
+    <ServicesCard
+      icon={require('./path-to-icon.png')}
+      label="Service Label"
+      progress="75%"
+      onPressCard={() => console.log('Card pressed!')}
+    />
+  );
+};
+
+export default App;
+```
+
+
+## Props
+
+| Prop Name            | Type          | Default               | Description                                                |
+| -------------------- | ------------- | --------------------- | ---------------------------------------------------------- |
+| `icon`          | `ImageSource` | `null`           | Icon to display within the card.   |
+| `label`              | `string`      | `''`                  | The label or title to display on the card.                      |
+| `progress`              | `string`      | `''`                  | Progress text (e.g., percentage) displayed on the card.                   |
+| `currency`              | `string`      | `$`                  | The currency symbol displayed alongside the amount. |
+| `onPressCard`           | `function` | null      | Callback function triggered when the card is pressed.    |
+| `containerStyle`          | `object`      | `{}`   | Additional styling for the card container.                                   |
+| `containerStyle`          | `object`      | `{}`   | Additional styling for the card container.                                   |
+| `cardWidth`          | `number`      | `(screenWidth - 56) / 2.12`   | Width of the card.                                  |
+| `aspectRatio`          | `number`      | `getWp(157, 157, 157) / getHp(77, 77, 77)`  | Aspect ratio of the card.  
+
+## Features
+
+- **Dynamic Content**: Supports dynamic text, icons, and progress indi
+- **Customizable Styles**: Allows custom styles for the card container.
+- **Interactive**: Includes an onPress callback for handling user interactions.
+
+### Customizing the Services Card
+
+```javascript
+<ServicesCard
+  icon={require('../assets/service-icon.png')}
+  label="Premium Service"
+  progress="85%"
+  onPressCard={() => console.log('Service Card Pressed')}
+  containerStyle={{ backgroundColor: '#e0e0e0', padding: 10 }}
+  width={200}
+  aspectRatio={1.5}
+/>
+```
+
+## Notes
+
+
+- Ensure all required props (icon, label, onPressCard) are provided for accurate rendering.
+- Use responsive utilities (e.g., getWp, getHp) to ensure the card is visually consistent across screen sizes.
+- The icon should be a valid image source to avoid rendering issues.

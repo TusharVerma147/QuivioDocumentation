@@ -1,0 +1,67 @@
+
+# Membership
+
+The Membership component in the Historical Screen provides a detailed breakdown of membership performance, including new and recurring memberships over a specific period.
+
+<figure> <img src="/img/inventory/membership.png" alt="This is an example image  of Membership Data" width="300" height="600" /></figure>
+
+## Overview
+
+The Membership component allows users to:
+
+- Analyze new vs. recurring memberships.
+- Visualize membership data using charts.
+- Apply custom date range filters.
+- Refresh membership data dynamically.
+
+## Key Features
+
+- **Membership Breakdown**:  Displays counts of new and recurring memberships.
+- **Chart Representation**: Provides visual insights with bar and line charts.
+- **Custom Date Filters**: Enables custom date selection for analysis.
+                   
+
+## Code Structure
+
+### State Management
+
+The Membership component uses the following state:
+
+```javascript
+const initialState = {
+  membershipData: [],
+  startDate: '',
+  endDate: '',
+  isLoading: false,
+};
+const [state, updateState] = useSimpleReducer(initialState);
+```
+
+### Event Handlers
+
+- **handleDateChange**: Filters membership data based on the selected date range.
+- **handleRefresh**: Reloads membership data dynamically.
+
+### API Integration
+
+- **getMembershipDataAPI**: Fetches historical membership data for the specified date range.
+
+## Analytics
+
+Logs API interactions:
+
+```javascript
+AnalyticsService.logEvent(EVENTS.MEMBERSHIP_DATA_SUCCESS);
+AnalyticsService.logEvent(EVENTS.MEMBERSHIP_DATA_FAILED, { error: error?.message })
+```
+
+## Navigation
+
+The Membership component is accessible via the tab-based navigation in the Historical Screen.
+
+## Conclusion
+
+Provides insights into membership trends, distinguishing between new and recurring memberships, supported by powerful filtering and dynamic refresh features.
+
+
+

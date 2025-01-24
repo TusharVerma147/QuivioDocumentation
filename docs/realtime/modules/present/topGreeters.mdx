@@ -1,0 +1,58 @@
+
+# Top Greeters
+
+The Top Greeters Screen highlights employees with the highest customer interactions, showcasing their performance and contributions.
+
+<figure> <img src="/img/inventory/topgreetes.png" alt="This is an example image  of Top Greeters" width="300" height="600" /></figure>
+
+## Overview
+
+The Top Greeters Screen allows users to:
+
+- View a ranked list of employees with the most customer interactions.
+- Identify top-performing greeters.
+
+## Key Features
+
+- **Employee Rankings**: Displays rankings with interaction counts.
+- **Highlighting**: Highlights top performers for recognition.
+- **Filters**: Filters by date range or location.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Redux**: topGreetersReducer for managing state.
+
+### State Management
+
+The screen uses Redux to manage state:
+
+```javascript
+const initialState = {
+  greetersData: [],
+  isLoading: false,
+  error: null,
+};
+```
+### Event Handlers
+
+- **refreshGreeterRankings**: Reloads rankings from the server.
+
+### API Integration
+
+- **getTopGreeters API**: Fetches rankings data.
+
+## Navigation
+
+Integrated into the dashboard with links to detailed employee profiles.
+
+## Conclusion
+
+The Top Greeters Screen provides visibility into employee performance, promoting healthy competition and recognition.
+
+
+
+

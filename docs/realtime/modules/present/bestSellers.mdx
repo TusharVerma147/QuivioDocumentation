@@ -1,0 +1,60 @@
+
+# Best Sellers
+
+The Best Sellers Screen showcases products with the highest sales, helping users identify key revenue drivers.
+
+<figure> <img src="/img/inventory/bestSellers.png" alt="This is an example image  of bestSellers" width="300" height="600" /></figure>
+
+## Overview
+
+The Best Sellers Screen allows users to:
+
+- View a ranked list of products based on sales volume.
+- Analyze sales performance by product category.
+
+## Key Features
+
+- **Product Rankings**:  Lists best-selling products with details.
+- **Sales Insights**: Provides additional details for each product.
+- **Filters:**: Filters by category or date range.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Product Card Components**: For displaying product details.
+- **Redux**: bestSellersReducer for managing state.
+
+### State Management
+
+The screen uses Redux to manage state:
+
+```javascript
+const initialState = {
+  bestSellersData: [],
+  isLoading: false,
+  error: null,
+};
+```
+### Event Handlers
+
+- **refreshBestSellers**: Reloads product rankings from the backend.
+
+### API Integration
+
+- **getBestSellers API**: Fetches data on top-selling products.
+
+## Navigation
+
+Accessible through the dashboard, with links to detailed product pages.
+
+## Conclusion
+
+Presents a ranked view of the top-selling items, complete with sales and revenue details, empowering businesses to optimize their offerings.
+
+
+
+
+

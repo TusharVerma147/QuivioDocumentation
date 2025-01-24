@@ -1,0 +1,91 @@
+
+# Historical
+
+The Historical Screen is a React Native component designed to display detailed historical data and analytics about a site’s performance. It allows users to view and analyze key metrics such as cars washed, memberships, weekly stats, top greeters, and best sellers. This document provides an overview of the code structure, functionality, and important elements of the Historical Screen.
+
+<figure> <img src="/img/inventory/historical.png" alt="This is an example image  of  Historical Data" width="300" height="600" /></figure>
+
+## Overview
+
+The Present Stats module provides real-time updates on:
+
+- View detailed historical analytics, including cars washed, memberships, and weekly stats.
+- Identify top-performing greeters and best-selling items.
+- Filter data based on custom date ranges.
+- Navigate through tabs for each metric.
+- Refresh data using pull-to-refresh functionality.
+- View data represented visually with charts and tables.
+
+## Key Features
+
+- **Cars Washed**: Displays the total number of cars washed over a selected period.
+- **Membership Data**:  Shows details about memberships, including new and recurring memberships.
+- **Weekly Stats**: Provides a week-by-week breakdown of performance metrics.
+- **Top Greeters**: Highlights the greeters with the best performance metrics.
+- **Best Sellers**: Lists the best-selling items over a specific timeframe.
+- **API Integration**: Fetches and updates historical data dynamically from the server.
+- **Pull-to-Refresh**: Refreshes the displayed data with a pull-to-refresh gesture.
+- **Custom Date Filtering**: Allows users to filter data by selecting custom date ranges.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Custom Components**:HistoricalHeader, CustomTabs, Charts, DataTable, DateFilter.
+- **Hooks**: useAppSelector, useAppThunkDispatch, useSimpleReducer.
+- **Redux**: getHistoricalData, getTopGreeters, getBestSellers.
+- **Services**: AnalyticsService, ModalController.
+- **Utilities**: colors, commonStyles, formatDate, normalize, chartStyles.
+- **Third-party Libraries**: ScrollView, RefreshControl, ToastAndroid, BackHandler.
+
+
+### State Management
+
+The screen uses the useSimpleReducer hook to manage the component's state:
+
+```javascript
+const initialState = {
+  selectedTab: 'Cars Washed',
+  startDate: '',
+  endDate: '',
+  isRefreshing: false,
+  historicalData: [],
+  isLoading: false,
+};
+const [state, updateState] = useSimpleReducer(initialState);
+```
+
+### Event Handlers
+
+- **handleTabChange**: Updates the selected tab and fetches relevant data.
+- **handleDateFilter**: Applies a custom date filter and reloads data accordingly.
+- **handleRefresh**: Refreshes the data for all sections using pull-to-refresh.
+
+### API Integration
+
+- **getHistoricalDataAPI**: Fetches historical data for the selected tab and date range.
+
+## Analytics
+
+Logs events for API call successes and failures using AnalyticsService:
+
+```javascript
+AnalyticsService.logEvent(EVENTS.HISTORICAL_DATA_SUCCESS, { tab: state.selectedTab });
+AnalyticsService.logEvent(EVENTS.HISTORICAL_DATA_FAILED, {
+  error: error?.message,
+  tab: state.selectedTab,
+});
+```
+
+## Navigation
+
+The screen uses a tab-based navigation system to allow users to switch between Cars Washed, Membership, Weekly Stats, Top Greeters, and Best Sellers sections.
+
+## Conclusion
+
+The Historical Screen provides an in-depth overview of key performance metrics, enabling users to analyze past performance effectively. Its intuitive tab-based navigation, data filtering options, and API integration ensure a seamless user experience.
+
+
+

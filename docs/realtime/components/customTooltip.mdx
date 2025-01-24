@@ -1,0 +1,80 @@
+# CustomTooltip
+
+The `CustomTooltip` component is a highly customizable UI element designed to display tooltips in your React Native app. It leverages the `react-native-walkthrough-tooltip` package to provide a clean and interactive tooltip experience. This component is optimized for dynamic content, customizable arrow size and placement, and interaction behavior.
+
+## Usage
+
+### Example Image
+
+<figure> <img src="/img/inventory/customTooltip.png" alt="This is an example image of CustomTooltip" width="300" height="600"/></figure>
+
+### Basic Implementation
+
+```jsx
+import React, { useState } from 'react';
+import CustomTooltip from './CustomTooltip';
+
+const App = () => {
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  return (
+    <CustomTooltip
+      isVisble={isTooltipVisible}
+      setIsVisble={setIsTooltipVisible}
+      content={() => <Text>This is a tooltip!</Text>}
+    >
+      <Button title="Show Tooltip" onPress={() => setIsTooltipVisible(true)} />
+    </CustomTooltip>
+  );
+};
+
+export default App;
+
+```
+
+## Props
+
+| Prop Name                | Type        | Default         | Description                                             |
+| ------------------------ | ----------- | --------------- | ------------------------------------------------------- |
+| `children`              | `ReactNode` | `undefined`                  | The element that will trigger the tooltip when interacted with.                   |
+| `tooltipStyle`          | `Object`      |  `{}`   |  Custom styles for the tooltip container.                                |
+| `content`          | `Function`    | `() => {}`      |  A function that returns the content of the tooltip.|  
+| `isVisble`          | `Boolean`    | `false`      |  Controls the visibility of the tooltip.|  
+| `arrowStyle`          | `Object`    |   `{}`   |  Custom styles for the tooltip's arrow. |  
+| `contentStyle`          | `Object`    |   `{}`   |  Custom styles for the tooltip's content. | 
+| `setIsVisble`          | `Boolean`    | `false`      |  A function to change the visibility of the tooltip.| 
+| `arrowSize`          | `Object`    |   `{ width: 10, height: 10 }`   |  Custom size for the tooltip's arrow. |  
+| `closeOnContentInteraction`          | `Boolean`    | `false`      |  Determines if the tooltip should close when interacting with its content.| 
+
+## Features
+
+- **Customizable Tooltip**: Easily display dynamic content in the tooltip.
+- **Customizable Arrow**:   Adjust the size and style of the tooltip's arrow to match your design.
+- **Interaction Behavior**:  Optionally close the tooltip on content interaction.
+- **Positioning Control**: Set the tooltip's position relative to its trigger element.
+- **Responsive Design**: Works seamlessly on both Android and iOS platforms.
+
+### Customizing the Tooltip
+
+```javascript
+<CustomTooltip
+  isVisble={isTooltipVisible}
+  setIsVisble={setIsTooltipVisible}
+  content={() => <Text>This is a customized tooltip!</Text>}
+  arrowSize={{ width: 15, height: 15 }}
+  tooltipStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+>
+  <Button title="Show Customized Tooltip" onPress={() => setIsTooltipVisible(true)} />
+</CustomTooltip>
+
+```
+
+## Notes
+
+
+- The CustomTooltip component supports dynamic content through the content prop, which expects a function returning the desired tooltip content.
+- The arrowSize prop allows customization of the arrow's size, making it adaptable for different UI requirements.
+- Ensure that isVisble is controlled correctly to toggle the visibility of the tooltip, as it relies on this prop to function.
+
+
+

@@ -1,0 +1,65 @@
+# Selected Tags
+
+The Selected Tags component is a versatile React Native UI element designed to display selected filters dynamically. It is tailored for seamless integration and provides clear visual feedback on user-selected options.
+
+
+
+
+## Usage
+
+### Example Image
+
+
+<figure> <img src="/img/inventory/selectedTag.png" alt="This is an example image  of Selected Tag" width="300" height="600"/></figure>
+
+### Basic Implementation
+
+```jsx
+import React from 'react';
+import SelectedTags from './SelectedTags';
+
+const App = () => (
+  <SelectedTags
+    filterCondition={1}
+    firstText="Today's Data"
+    secondText="Yesterday's Data"
+  />
+);
+
+export default App;
+```
+
+## Props
+
+| Prop Name                | Type        | Default         | Description                                             |
+| ------------------------ | ----------- | --------------- | ------------------------------------------------------- |
+| `filterCondition`              | `any` | `null`                  | Determines the selected filter. Accepts values like 1, 2, 3, or strings like "Day", "Week", etc.                    |
+| `firstText`          | `string`      |  `null`   |  Custom text for the first label. Defaults to "Selected [Condition]".                                |
+| `secondText`          | `string`| `null`      |  Custom text for the second label. Defaults to "Previous [Condition]".  |  
+
+## Methods and Utilities
+
+The component provides internal methods to enhance usability:
+
+- **`_renderItem`**: Handles the rendering of individual rows in the table.
+- **`listHeader`**: Renders the table header based on headerData.
+
+## Features
+
+- **Dynamic Filter Labels**: Automatically displays the filter condition (Day, Week, Month, Year) based on the provided prop.
+- **Customizable Labels**: Allows overriding default labels with firstText and secondText props.
+- **Responsive Design**: Utilizes helper functions for height and width adjustments to ensure consistent styling across devices.
+
+## Design Details
+
+The component displays two tag-like elements side by side:
+
+- **First Tag**:  Highlights the current or selected filter condition.
+- **Second Tag**: Indicates the previous filter condition.
+
+Both tags include a circular colored indicator, visually distinguishing the selected and previous tags.
+
+## Notes
+
+- Ensure the filterCondition prop is valid to render the appropriate labels.
+- The component leverages external utility functions (getHp, getWp) and constants (fonts, colors) for styling.

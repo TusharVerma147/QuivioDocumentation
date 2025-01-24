@@ -1,0 +1,173 @@
+
+# Membership
+
+The Membership Screen is a React Native component designed to display membership-related data in a tabular format. It provides users with interactive and detailed visualizations of membership metrics such as member count, current membership value, and new membership sales across various sites. The screen uses tables and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Membership Screen.
+
+<figure> <img src="/img/inventory/membershiptable.png" alt="This is an example image  of Membership Table" width="300" height="600" /></figure>
+
+## Overview
+
+The Membership Screen allows users to:
+
+- View detailed membership data in a user-friendly layout through interactive tables.
+- Analyze membership trends over time with visual aids like cards.
+- Toggle between different datasets and view real-time updates.
+- Refresh membership data dynamically to ensure up-to-date information.
+
+
+## Key Features
+
+- **Interactive Cards**: Displays membership metrics such as member count and current membership value using card visualization.
+- **Interactive Filters**: Users can apply filters to view specific membership data based on criteria such as day, week, month, or year.
+- **Filtering**: Allows users to apply various filters to narrow down the list based on custom parameters like date range or sorting criteria.
+- **Pull-to-Refresh**: Updates the membership information dynamically when the user refreshes the screen.
+- **Interactive Modals**: Provides a user-friendly interface for filtering and updating data through modals.
+- **API Integration**: Seamlessly fetches, filters, and updates membership data using backend APIs.
+- **Custom Table**: Displays membership data in a sortable and interactive table format.
+
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Custom Components**: ImageHeader, CustomLoader, DateRange, CustomListTable, ChronoPicker, DateSelector, MemberCard, SheetWithBasicSelectors.
+- **Hooks**: useAppDispatch, useAppSelector, useSimpleReducer.
+- **Redux**: getMembershipSaleList.
+- **Utilities**: colors, commonStyles, screenNames etc.
+- **Third-party Libraries**: React, useEffect, useState, ImageBackground, Modal, RefreshControl, ScrollView, View.
+
+
+### State Management
+
+The Membership Screen uses local state and Redux for state management:
+
+```javascript
+const initialState = {
+  memberData: [],
+  sortFilter: {},
+  isLoading: false,
+  headerImage: '',
+  dateRange: false,
+  isRefreshing: false,
+  setSelectedMode: '',
+  selectedMarkedDates: {},
+  dateFilter: Chronodata[1],
+  selectedDateDay: formatDate(),
+  selectedEndDate: getEndDate(),
+  selectedStartDate: getStartDate(),
+  memberValue: 0,
+  memberCount: 0,
+};
+
+const [state, updateState] = useSimpleReducer(initialState);
+const dispatch = useAppThunkDiapatch();
+
+```
+
+### Event Handlers
+
+- **getData**: Fetches membership data from the API based on the selected date filter and updates the state.
+- **onChangeDateFilter**: Handles the change in date filter and updates the state accordingly.
+- **handleRefresh**: Refreshes the membership data and updates the state.
+- **onPressApplyFilter**: Applies the selected date filter and updates the state.
+- **onPressOrder**: Opens a modal for sorting the membership data and updates the state based on the selected sorting criteria.
+
+### API Integration
+
+The Membership Screen integrates with APIs to fetch and filter membership data:
+
+- **getData**: Retrieves the membership data from the backend.
+
+```javascript
+const getData = async (payload?: any) => {
+  updateState({ isLoading: true });
+
+  try {
+    const res: any = await dispatch(
+      getMembershipSaleList({
+        dateFilter: dateFilter?.id || 1,
+        ...(setSelectedMode?.length > 0
+          ? {
+              startDate:
+                dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
+              ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
+            }
+          : { ...getCustomDate() }),
+        siteId: selectedLocation.site_id,
+        page: 1,
+        limit: 50,
+        ...payload,
+      }),
+    );
+    const result = res?.payload?.data?.data;
+    updateState({
+      memberData: result,
+      memberCount: result?.memberCount || 0,
+      memberValue: result?.monthlyMembershipValue || 0,
+    });
+    AnalyticsService.logEvent(EVENTS.NEW_MEMBERSHIP_SALES_SUCCESS, {
+      dateFilter: dateFilter?.id || 1,
+      ...(setSelectedMode?.length > 0
+        ? {
+            startDate:
+              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
+            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
+          }
+        : { ...getCustomDate() }),
+      siteId: selectedLocation.site_id,
+      page: 1,
+      limit: 50,
+      ...payload,
+    });
+  } catch (error: any) {
+    AnalyticsService.logEvent(EVENTS.NEW_MEMBERSHIP_SALES_FAILED, {
+      dateFilter: dateFilter?.id || 1,
+      ...(setSelectedMode?.length > 0
+        ? {
+            startDate:
+              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
+            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
+          }
+        : { ...getCustomDate() }),
+      siteId: selectedLocation.site_id,
+      page: 1,
+      limit: 50,
+      ...payload,
+      error: error?.message,
+    });
+  } finally {
+    updateState({ isLoading: false, isRefreshing: false });
+  }
+};
+```
+
+### Chart Configuration
+
+The bar chart uses the Chart component with custom configurations:
+
+- **Chart**: Displays sales metrics such as gross car count, non-wash sales, and total sales amount using a bar chart visualization.
+
+### Custom Hooks
+
+- **useSimpleReducer**: Manages the state of the component using a simple reducer pattern.
+
+
+### Dynamic Features
+
+- **Real-Time Data Updates**: Updates membership metrics dynamically using API calls.
+- **Interactive Filtering**: Users can customize the data view based on their requirements.
+- **Responsive Design**: Ensures a user-friendly experience across all device sizes.
+
+
+## Navigation
+
+The Membership Screen allows navigation between tabs and interaction with table data. Users can also refresh data or select a different timeframe for analysis.
+
+## Conclusion
+
+The Membership Screen offers an intuitive and visually appealing way to analyze membership data across various categories. With interactive tables, filtering options, and dynamic data updates, it enhances user engagement and provides meaningful insights into membership performance.
+
+
+

@@ -1,0 +1,66 @@
+
+# Car Count
+
+The Car Count Screen is a React Native component that tracks and displays the number of cars serviced during a specific period. It offers intuitive filtering and data visualization to help users understand trends in car servicing.
+
+<figure> <img src="/img/inventory/carcount.png" alt="This is an example image  of carcount" width="300" height="600" /></figure>
+
+## Overview
+
+The Car Count Screen allows users to:
+
+- View the total number of cars serviced.
+- Filter data by date ranges (daily, weekly, monthly).
+- Analyze trends using animated charts.
+
+## Key Features
+
+- **Data Filters**: Allows selection of specific date ranges.
+- **Charts and Graphs**: Visualizes trends using line charts and bar graphs.
+- **API Integration**: Fetches and updates car count data dynamically.
+- **Error Handling**: Displays messages for API failures or data issues.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Chart Libraries**: For rendering animated graphs.
+- **Redux**: carCountReducer, actions for state management.
+- **Utilities**: DatePicker for selecting date ranges.
+
+### State Management
+
+The screen uses Redux to manage state:
+
+```javascript
+const initialState = {
+  carCountData: [],
+  isLoading: false,
+  error: null,
+};
+
+```
+### Event Handlers
+
+- **onFilterChange:**: Updates car count data based on the selected date range.
+- **refreshData:**:  Manually refreshes the car count data.
+
+### API Integration
+
+- **getCarCount API**: FFetches car count data from the backend.
+- Includes error handling and retry mechanisms.
+
+## Navigation
+
+Accessible from the dashboard and allows navigation back to the main menu or related screens.
+
+## Conclusion
+
+The Car Count Screen provides a comprehensive view of vehicle servicing trends with interactive and dynamic features, ensuring a seamless user experience.
+
+
+
+
+

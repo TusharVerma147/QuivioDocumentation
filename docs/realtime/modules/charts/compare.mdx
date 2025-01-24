@@ -1,0 +1,166 @@
+
+# Compare
+
+The Compare Screen is a React Native component designed to display comparative data across different categories such as sales, labor, and membership. It provides users with interactive and detailed visualizations of comparative metrics using charts and tables. The screen allows users to compare data across different time periods or sites, enhancing data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Compare Screen.
+
+<figure> <img src="/img/inventory/comparechart.png" alt="This is an example image  of Compare Chart" width="300" height="600" /></figure>
+
+## Overview
+
+The Compare Screen allows users to:
+
+- View detailed comparative data in a user-friendly layout through interactive charts and tables.
+- Analyze trends over time or across different sites with visual aids like bar charts.
+- Toggle between different datasets and view real-time updates.
+- Refresh data dynamically to ensure up-to-date information.
+
+
+## Key Features
+
+- **Interactive Charts**: Displays comparative metrics such as sales, labor, and membership using a bar chart visualization.
+- **Interactive Filters**: Users can apply filters to view specific comparative data based on criteria such as day, week, month, or year.
+- **Filtering**: Allows users to apply various filters to narrow down the list based on custom parameters like date range or sorting criteria.
+- **Pull-to-Refresh**: Updates the comparative information dynamically when the user refreshes the screen.
+- **Interactive Modals**: Provides a user-friendly interface for filtering and updating data through modals.
+- **API Integration**: Seamlessly fetches, filters, and updates comparative data using backend APIs.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Custom Components**: ImageHeader, CustomLoader, DateRange, Chart, TableTopView, ChronoPicker, DateSelector, SelectedTags, TogglingButton.
+- **Hooks**: useAppDispatch, useAppSelector, useSimpleReducer.
+- **Redux**: getCompareGraphData, getCompareTabData, getSiteListing.
+- **Utilities**: colors, commonStyles, endpoint etc.
+- **Third-party Libraries**: ImageBackground, RefreshControl.
+
+
+### State Management
+
+The Compare Screen uses local state and Redux for state management:
+
+```javascript
+const initialState = {
+  listData: [],
+  graphData: {},
+  headerImage: '',
+  categoryType: 1,
+  isLoading: false,
+  dateRange: false,
+  selectedOption: 0,
+  date: formatDate(),
+  subCategoryType: 1,
+  setSelectedMode: '',
+  isGraphLoading: false,
+  isSiteSelected: false,
+  selectedMarkedDates: {},
+  dateFilter: Chronodata[1],
+  headerColor: colors.white10,
+  selectedEndDate: getEndDate(),
+  selectedDateDay: formatDate(),
+  isMultiSiteListLoading: false,
+  selectedItem: periodData['2'][0],
+  selectedStartDate: getStartDate(),
+  selectedLocation: siteListingData[0],
+  tableStats: defaultMultiTableTopViewData['1'],
+};
+
+const [state, updateState] = useSimpleReducer(initialState);
+const dispatch = useAppThunkDispatch();
+
+```
+
+### Event Handlers
+
+- **getCompareData**: Fetches comparative data from the API based on the selected date filter and updates the state.
+- **getGraphData**: Fetches graph data from the API and updates the state.
+- **onChangeCompare**: Navigates to the compare listing screen to select a different comparison type.
+- **onPressApplyFilter**: Applies the selected date filter and updates the state.
+- **handleRefresh**: Refreshes the comparative data and updates the state.
+
+
+### API Integration
+
+The Compare Screen integrates with APIs to fetch and filter comparative data:
+
+- **getCompareData**: Retrieves the labor data from the backend.
+- **getGraphData**: Retrieves the graph data from the backend.
+
+```javascript
+const getCompareData = async (payload?: any, payload2?: any) => {
+  const payload1 = {
+    siteId: selectedLocation?.site_id,
+    categoryType,
+    isCurrentDate: !isPastDate,
+    dateFilter: dateFilter.id,
+    ...(setSelectedMode?.length > 0
+      ? {
+          startDate:
+            dateFilter.id !== 2 ? selectedDateDay : selectedStartDate,
+          ...(dateFilter.id === 2 ? { endDate: selectedEndDate } : {}),
+        }
+      : { ...getCustomDate() }),
+    ...payload,
+  };
+  try {
+    updateState({ isLoading: true });
+    const res: any = await dispatch(getCompareTabData(payload1));
+    const newData = res.payload.data.data.map(
+      mapStatisticsDataWithFormatting,
+    );
+    AnalyticsService.logEvent(EVENTS.COMPARE_TAB_SUCCESS, {
+      ...payload1,
+    });
+    await getGraphData(payload2);
+    updateState({
+      isLoading: false,
+      tableStats: newData,
+      ...(!selectedSubCategoryType
+        ? { selectedSubCategoryType: res.payload.data.data[0] }
+        : {}),
+    });
+  } catch (error: any) {
+    AnalyticsService.logEvent(EVENTS.COMPARE_TAB_FAILED, {
+      error: error?.message,
+      ...payload1,
+    });
+    updateState({ isLoading: false });
+  }
+};
+
+```
+
+### Chart Configuration
+
+The bar chart uses the Chart component with custom configurations:
+
+- **Chart**: Displays comparative metrics such as sales, labor, and membership using a bar chart visualization.
+
+
+### Custom Hooks
+
+- **useSimpleReducer**: Manages the state of the component using a simple reducer pattern.
+
+
+### Dynamic Features
+
+- **Real-Time Data Updates**: Updates comparative metrics dynamically using API calls.
+- **Interactive Filtering**: Users can customize the data view based on their requirements.
+- **Responsive Design**: Ensures a user-friendly experience across all device sizes.
+
+
+### Tabs Navigation
+
+Updates  tabs to compare different data like sale, labor, and membership. dynamically using API calls.
+
+
+## Navigation
+
+The Compare Screen allows navigation between tabs and interaction with chart data. Users can also refresh data or select a different timeframe for analysis.
+
+## Conclusion
+
+The Compare Screen allows navigation between tabs and interaction with chart data. Users can also refresh data or select a different timeframe for analysis.
+

@@ -1,0 +1,100 @@
+
+# OptionsCard
+
+The OptionsCard component is a user-friendly and interactive UI element designed to present multiple selectable options in a row. It is dynamically customizable and integrates seamlessly into your app.
+
+## Usage
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import OptionsCard from './OptionsCard';
+
+const handlePressCard = (type) => {
+  console.log(`Selected option: ${type}`);
+};
+
+const App = () => (
+  <OptionsCard
+    onPressCard={handlePressCard}
+  />
+);
+
+export default App;
+```
+
+## Props
+
+| Prop Name            | Type          | Default               | Description                                                |
+| -------------------- | ------------- | --------------------- | ---------------------------------------------------------- |
+| `onPressCard`           | `function` | `null`           | Callback function triggered when an option is selected.      |
+
+## Features
+
+- **Dynamic Options**: Options are rendered dynamically from a data array.
+- **Interactive Design**: Each card is tappable, and the activeOpacity enhances user feedback.
+- **Customizable Styles**: Easily override default styles with custom styles for any part of the component.
+- **Icon Integration**:  Each option includes an icon alongside its label.
+
+## Data Structure
+
+The component uses a data array to define the options displayed. Each item in the array should include the following properties:
+
+| Property Name           | Type               | Description                                                |
+| -------------------- | ------------- | ---------------------------------------------------------- |
+| `id`           | `number`         | Unique identifier for the option.     |
+| `label`           | `string`         | Text label displayed below the icon.    |
+| `icon`          | `object`         | Icon to be displayed for the option.     |
+| `type`           | `string`         | Unique type identifier passed to the onPressCard callback.    |
+
+### Example Data
+
+```javascript
+const data = [
+  { id: 1, label: 'Sales', icon: icons.billing, type: 'sales' },
+  { id: 2, label: 'Labor', icon: icons.userIncrease, type: 'labor' },
+  { id: 3, label: 'Compare', icon: icons.graph, type: 'compare' },
+];
+```
+
+## Styling
+
+The OptionsCard component supports customizable styling via the styles object.
+
+### Example Styling
+
+```javascript
+const styles = {
+  root: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cardStyle: {
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+  },
+  seperator: {
+    width: 1,
+    backgroundColor: '#ccc',
+    marginHorizontal: 8,
+  },
+};
+```
+
+### Customizing the FullWidthCard
+
+```javascript
+<OptionsCard
+  onPressCard={(type) => console.log(`Option selected: ${type}`)}
+/>
+```
+
+## Notes
+
+
+- The onPressCard prop must be provided to handle user interactions.
+- Ensure the data array includes valid icon sources and unique id values.
+- The component is optimized for both Android and iOS devices.

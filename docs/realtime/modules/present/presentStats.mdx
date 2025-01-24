@@ -1,0 +1,89 @@
+
+# Present Stats
+
+The Present Stats feature provides real-time insights into key business metrics, enabling quick and informed decision-making. It focuses on monitoring live employee attendance, tracking ongoing tasks, and displaying current sales figures for up-to-date operational management.
+
+<figure> <img src="/img/inventory/Present.png" alt="This is an example image  of PresentStats" width="300" height="600" /></figure>
+
+## Overview
+
+The Present Stats module provides real-time updates on:
+
+- Active employee attendance.
+- Ongoing and completed tasks.
+- Current sales and revenue figures.
+- Dynamic data refresh through API polling and optional web sockets.
+
+## Key Features
+
+- **Live Employee Attendance**: Tracks which employees are currently present and working.
+- **Task Management**:  Monitors ongoing and completed tasks in real-time.
+- **Current Sales Insights**: Displays live sales data, including revenue trends.
+- **Real-Time Updates**: Supports both manual refresh and continuous updates via web sockets.
+
+## Code Structure
+
+### Imports
+
+- **Real-time Data Utilities**:Handles live updates and data polling.
+- **Redux**: Manages state for live stats.
+- **Time Utilities**: Formats timestamps for display.
+
+### State Management
+
+The presentStats state manages:
+
+```javascript
+const initialState = {
+  liveEmployeeData: [],
+  activeTasks: [],
+  completedTasks: [],
+  salesFigures: {
+    today: 0,
+    monthly: 0,
+  },
+  isLoading: false,
+  error: null,
+};
+```
+
+- **Polling Mechanism**: Triggers API calls at regular intervals for updates.
+- **Error Handling**:  Manages API or connection errors gracefully.
+
+### Event Handlers
+
+- **onRefresh**: Manually refreshes the data displayed on the screen.
+- **onLiveUpdate**: Processes updates received through web sockets.
+
+### API Integration
+
+- **getPresentStats API**: Fetches live data for attendance, tasks, and sales.
+- **Web Sockets**:  (Optional) Provides instant updates for connected clients.
+
+## Dashboard Features
+
+The Dashboard provides a comprehensive overview of business metrics through modular components, each designed to display specific data dynamically and interactively.
+
+## Key Components
+
+- **Car Count**: Tracks the real-time status of vehicles being serviced.
+- **Net Sales**: Displays sales performance data, broken down by day, week, and month.
+- **Labor Metrics**: Highlights employee work hours, costs, and efficiency.
+- **Top Greeters**: Ranks employees based on customer interactions.
+- **Best Sellers**: Identifies products with the highest sales volume.
+- **Employees**: Offers detailed tracking of employee performance.
+- **Present Stats**: Displays live updates on attendance, tasks, and sales.
+
+## Features Overview
+
+- **Interactive Charts**:  Visualize metrics using animated and intuitive charts.
+- **Dynamic Filtering**: Supports filters by date range, employee, category, or location.
+- **Real-Time Updates**: Key components like Present Stats and Net Sales update continuously for live insights.
+- **Modular API Integration**: Each feature fetches data from its dedicated API, ensuring optimized performance.
+
+## Conclusion
+
+The Present Stats feature is an essential part of the broader dashboard functionality, offering live operational insights for business efficiency. Together, the dashboard features provide a comprehensive overview of business performance, leveraging real-time data, modular APIs, and intuitive design to empower informed decision-making.
+
+
+

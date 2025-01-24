@@ -1,0 +1,64 @@
+
+# Labor
+
+The Labor Screen is a React Native component designed to provide insights into employee work hours and associated costs. It helps users track and manage labor utilization effectively.
+
+<figure> <img src="/img/inventory/labor.png" alt="This is an example image  of Labor" width="300" height="600" /></figure>
+
+## Overview
+
+The Labor Screen allows users to:
+
+- Monitor hours worked by employees.
+- Identify overtime or under-utilized hours.
+- Calculate labor costs as a percentage of sales.
+
+## Key Features
+
+- **Employee Metrics**: Displays hours worked and costs for individual employees.
+- **Charts**: Visual representation of labor trends.
+- **Filters**: Allows selection of specific date ranges or employee groups.
+- **Cost Insights**: Calculates labor costs based on sales figures.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Chart Libraries**: For displaying trends and metrics.
+- **Redux**: laborReducer for state management.
+- **Utilities**: DateFormatter for formatting dates.
+
+### State Management
+
+The screen uses Redux to manage state:
+
+```javascript
+const initialState = {
+  laborData: [],
+  isLoading: false,
+  error: null,
+};
+```
+### Event Handlers
+
+- **onDateChange**: Updates labor data for the selected period.
+- **refreshLaborStats**:  Fetches the latest labor metrics.
+
+### API Integration
+
+- **getLaborStats API**: Fetches data on employee hours and costs.
+
+## Navigation
+
+Accessible from the dashboard and allows navigation back to the main menu or related screens.
+
+## Conclusion
+
+The Labor Screen provides actionable insights into labor utilization, enabling efficient workforce management.
+
+
+
+
+

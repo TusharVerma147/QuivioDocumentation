@@ -1,0 +1,118 @@
+# CustomTab
+
+The CustomTab component is a horizontally scrollable tab navigation system that dynamically adjusts based on the selected tab and provides a smooth scrolling experience. It is designed to be lightweight and responsive, suitable for tablet and mobile platforms.
+
+## Usage
+
+### Example Image
+
+<figure> <img src="/img/inventory/customTab.png" alt="This is an example image  of Custom Tabs" width="300" height="600"/></figure>
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import CustomTab from './CustomTab';
+
+const tabs = [
+  { id: 1, label: 'Tab 1' },
+  { id: 2, label: 'Tab 2' },
+  { id: 3, label: 'Tab 3' },
+];
+
+const App = () => {
+  const [selectedTab, setSelectedTab] = React.useState(1);
+
+  const handleTabPress = (tabId) => {
+    setSelectedTab(tabId);
+  };
+
+  return (
+    <CustomTab onPress={handleTabPress} selectedTab={selectedTab} />
+  );
+};
+
+export default App;
+```
+
+## Props
+
+| Prop Name             | Type                  | Default     | Description                                                   |
+| --------------------- | --------------------- | ----------- | ------------------------------------------------------------- |
+| `onPress`       | `function`            | null    | Callback function triggered when a tab is pressed. |
+| `selectedTab`        | `function`            | null   | The ID of the currently selected tab.     |
+
+## Features
+
+- **Dynamic Tab Navigation**: Scrollable tabs with animated transitions.
+- **Focus Management**: Resets the tab view when the component gains focus.
+- **Tablet Optimization**: Disables horizontal scrolling for tablet layouts.
+- **Customizable Styling**: Styles can be updated via the styles object.
+
+### Component Details
+
+The CustomTab component is implemented as a FlatList with horizontal scrolling, ensuring performance and flexibility. Below are the main elements and their functionality:
+
+## Tab Rendering
+
+Each tab is rendered as a TouchableOpacity component:
+
+- **Selected Tab**:  Applies selectedTabContainer and selectedTabText styles.
+- **Unselected Tab**: Applies tabContainer and tabText styles.
+
+```javascript
+const TabComponent: React.FC<{ item: TabItem }> = ({ item }) => {
+  return (
+    <TouchableOpacity
+      disabled={selectedTab === item.id}
+      activeOpacity={0.9}
+      onPress={() => onPressTab(item.id)}
+      style={
+        selectedTab === item.id
+          ? styles.selectedTabContainer
+          : styles.tabContainer
+      }>
+      <Text
+        style={
+          selectedTab === item.id ? styles.selectedTabText : styles.tabText
+        }>
+        {item.label}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+```
+
+## Dynamic Scrolling
+
+The onPressTab function calculates the offset required to center the selected tab and animates the scrolling:
+
+```javascript
+const onPressTab = (val: number) => {
+  onPress(val);
+  const index = PresentStats.findIndex((item) => item.id === val);
+  const tabWidth = getWp(60, 60, 60);
+  const tabMargin = getWp(10, 10, 10);
+  const slightShift = getWp(10, 10, 10);
+  const offset = index * (tabWidth + tabMargin) - slightShift;
+  flatListRef?.current?.scrollToOffset({ offset, animated: true });
+};
+```
+
+## Reset on Focus
+
+When the component gains focus, the FlatList scrolls back to the first tab:
+
+```javascript
+useFocusEffect(
+  React.useCallback(() => {
+    flatListRef?.current?.scrollToOffset({ offset: 0, animated: true });
+  }, []),
+);
+```
+
+## Notes
+
+- Ensure the PresentStats array contains valid tab data with unique IDs.
+- The component is optimized for both mobile and tablet platforms.
+- Default styles can be customized via the styles object imported from ./styles.

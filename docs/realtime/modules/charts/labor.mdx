@@ -1,0 +1,146 @@
+
+# Labor
+
+The Labour Screen is a React Native component designed to display labor-related data in a graphical and tabular format. It provides users with interactive and detailed visualizations of labor metrics such as cars per labor hour, cost per labor hour, and labor percentage across various sites. The screen uses charts, tables, and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Labour Screen.
+
+<figure> <img src="/img/inventory/laborchart.png" alt="This is an example image  of Labor Chart" width="300" height="600" /></figure>
+
+## Overview
+
+The Labour Screen allows users to:
+
+- View detailed labor data in a user-friendly layout through interactive charts and tables.
+- Analyze labor trends over time with visual aids like bar charts.
+- Toggle between different datasets and view real-time updates.
+- Refresh labor data dynamically to ensure up-to-date information.
+
+
+## Key Features
+
+- **Interactive Charts**: Displays labor metrics such as cars per labor hour, cost per labor hour, and labor percentage using a bar chart visualization.
+- **Interactive Filters**: Users can apply filters to view specific labor data based on criteria such as day, week, month, or year.
+- **Filtering**: Allows users to apply various filters to narrow down the list based on custom parameters like date range or sorting criteria.
+- **Pull-to-Refresh**: Updates chart data dynamically with a simple pull-to-refresh gesture.
+- **Detailed Views**: Provides navigation to detailed data views when interacting with chart elements.
+- **API Integration**: Seamlessly fetches, filters, and updates labor data using backend APIs.
+- **Custom Table**: Displays labor data in a sortable and interactive table format.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Custom Components**: ImageHeader, CustomLoader, DateRange, Chart, CustomListTable, TableTopView, ChronoPicker, DateSelector, SelectedTags, SheetWithBasicSelectors.
+- **Hooks**: useAppDispatch, useAppSelector, useSimpleReducer.
+- **Redux**: getSiteListing, userReducer.
+- **Utilities**: colors, commonStyles, endpoint etc.
+- **Third-party Libraries**: ImageBackground, RefreshControl.
+
+
+### State Management
+
+The Labour Screen uses local state and Redux for state management:
+
+```javascript
+const initialState = {
+  laborListData: [],
+  isRefreshing: false,
+  isLaborLoading: false,
+  dateFilter: Chronodata[1],
+  tabsData: defaultTableTopViewData,
+  isTabLoading: false,
+  selectedOption: 0,
+  graphData: {},
+  isGraphLoading: false,
+  dateRange: false,
+  selectedDateDay: formatDate(),
+  selectedEndDate: getEndDate(),
+  selectedStartDate: getStartDate(),
+  selectedMarkedDates: {},
+  setSelectedMode: '',
+  sortFilter: {},
+  headerImage: '',
+};
+
+const [state, updateState] = useSimpleReducer(initialState);
+const dispatch = useAppThunkDiapatch();
+
+```
+
+### Event Handlers
+
+- **getLaborData**: Fetches labor data from the API based on the selected date filter and updates the state.
+- **getTabData**: Fetches tab data from the API and updates the state.
+- **getGraphData**: Fetches graph data from the API and updates the state.
+- **onChangeDateFilter**: Handles the change in date filter and updates the state accordingly.
+- **handleRefresh**: Refreshes the labor data and updates the state.
+- **onPressApplyFilter**: Applies the selected date filter and updates the state.
+
+
+### API Integration
+
+The Labour Screen integrates with APIs to fetch and filter labor data:
+
+- **getLaborData**: Retrieves the labor data from the backend.
+- **getTabData**:Retrieves the tab data from the backend.
+- **getGraphData**: Retrieves the graph data from the backend.
+
+```javascript
+const getLaborData = async (payload?: any) => {
+  updateState({ isLaborLoading: true });
+  try {
+    const res: any = await networkMethods.getApiCall(endpoint.laborListing, {
+      type: dateFilter?.id,
+      siteId: selectedLocation?.site_id,
+      ...(setSelectedMode?.length > 0
+        ? {
+            startDate:
+              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
+            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
+          }
+        : { ...getCustomDate() }),
+      ...payload,
+    });
+    updateState({ isLaborLoading: false, isRefreshing: false });
+    const result = res?.data?.data;
+    updateState({ laborListData: result });
+  } catch (error: any) {
+    updateState({ isLaborLoading: false, isRefreshing: false });
+  }
+};
+
+```
+
+### Chart Configuration
+
+The bar chart uses the Chart component with custom configurations:
+
+- **Chart**: Displays labor metrics such as cars per labor hour, cost per labor hour, and labor percentage using a bar chart visualization.
+
+### Custom Hooks
+
+- **useSimpleReducer**: Manages the state of the component using a simple reducer pattern.
+
+
+### Dynamic Features
+
+- **Real-Time Data Updates**: Updates labor metrics dynamically using API calls.
+- **Interactive Filtering**: Users can filter and customize the data visualization to meet their needs.
+- **Responsive Design**: Adapts the design to provide an optimal user experience across all devices.
+
+
+### Tabs Navigation
+
+Updates labor metrics dynamically using API calls.
+
+
+## Navigation
+
+The Labour Screen allows navigation between tabs and interaction with chart data. Users can also refresh data or select a different timeframe for analysis.
+
+## Conclusion
+
+The Labour Screen offers an intuitive and visually appealing way to analyze labor data across various categories. With interactive charts, filtering options, and dynamic data updates, it enhances user engagement and provides meaningful insights into labor performance.
+
+

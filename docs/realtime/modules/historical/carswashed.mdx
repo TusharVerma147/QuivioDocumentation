@@ -1,0 +1,68 @@
+
+# Cars Washed
+
+The Cars Washed component in the Historical Screen is designed to provide detailed insights into the total number of cars washed over a specified period. It combines visual data representation with tabular analysis to help users evaluate car wash performance effectively.
+
+<figure> <img src="/img/inventory/carwashed.png" alt="This is an example image  of Car Washed" width="300" height="600" /></figure>
+
+## Overview
+
+The Cars Washed component allows users to:
+
+- View the total number of cars washed.
+- Analyze trends using charts and visualizations.
+- Filter data by custom date ranges.
+- Refresh data dynamically via pull-to-refresh functionality.
+
+## Key Features
+
+- **Total Cars Washed**:  Displays the aggregate count of cars washed for the selected date range.
+- **Chart Representation**: Presents data in a bar or line chart format for better visualization of trends.
+- **Custom Date Filters**: Enables users to select and analyze data for specific date ranges.
+
+## Code Structure
+
+### State Management
+
+The Cars Washed component uses the following state:
+
+```javascript
+const initialState = {
+  carsWashedData: [],
+  startDate: '',
+  endDate: '',
+  isLoading: false,
+};
+const [state, updateState] = useSimpleReducer(initialState);
+```
+
+### Event Handlers
+
+- **handleDateChange**: Updates the date range and fetches data accordingly.
+- **handleRefresh**: Reloads the data for cars washed when the user performs a pull-to-refresh gesture.
+
+### API Integration
+
+- **getCarsWashedDataAPI**: Fetches historical data for the total cars washed based on the selected date range.
+
+## Analytics
+
+Logs events for API call successes and failures using AnalyticsService:
+
+```javascript
+AnalyticsService.logEvent(EVENTS.CARS_WASHED_DATA_SUCCESS);
+AnalyticsService.logEvent(EVENTS.CARS_WASHED_DATA_FAILED, { error: error?.message });
+```
+
+## Navigation
+
+The Cars Washed component is accessible via the tab-based navigation in the Historical Screen.
+
+## Conclusion
+
+Offers detailed analysis of car wash performance over customizable time periods with interactive charts and pull-to-refresh for real-time updates.
+
+
+
+
+

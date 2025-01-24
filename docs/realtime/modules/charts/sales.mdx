@@ -1,0 +1,148 @@
+
+# Sales
+
+The Sales Screen is a React Native component designed to display sales-related data in a graphical and tabular format. It provides users with interactive and detailed visualizations of sales metrics such as gross car count, non-wash sales, and total sales amount across various sites. The screen uses charts, tables, and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Sales Screen.
+
+<figure> <img src="/img/inventory/saleschart.png" alt="This is an example image  of Sales Chart" width="300" height="600" /></figure>
+
+## Overview
+
+The Sales Screen allows users to:
+
+- View detailed sales data in a user-friendly layout  through interactive charts for cars and non wash cars.
+- Analyze sales trends over time with visual aids like bar charts.
+- Toggle between different datasets and view real-time updates.
+- Refresh sales data dynamically to ensure up-to-date information.
+
+
+## Key Features
+
+- **Interactive Charts**: Displays sales metrics such as gross car count, non-wash sales, and total sales amount using a bar chart visualization.
+- **Interactive Filters**: Users can apply filters to view specific sales data based on criteria such as day, week, month, or year.
+- **Filtering**: Allows users to apply various filters to narrow down the list based on custom parameters like date range or sorting criteria.
+- **Pull-to-Refresh**:  Updates the sales information dynamically when the user refreshes the screen.
+- **Interactive Modals**: Provides a user-friendly interface for filtering and updating data through modals.
+- **API Integration**:Seamlessly fetches, filters, and updates sales data using backend APIs.
+- **Custom Table**: Displays sales data in a sortable and interactive table format.
+
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Custom Components**: SImageHeader, CustomLoader, DateRange, Chart, CustomListTable, TableTopView, ChronoPicker, DateSelector, SelectedTags, SheetWithBasicSelectors.
+- **Hooks**: useAppDispatch, useAppSelector, useFocusEffect.
+- **Redux**: getSiteListing, userReducer.
+- **Utilities**: colors, normalize, formatCurrency etc.
+- **Third-party Libraries**: FlatList, RefreshControl,ImageBackground, Modal,
+
+
+### State Management
+
+The Sales Screen uses local state and Redux for state management:
+
+```javascript
+const initialState = {
+  listData: [],
+  graphData: {},
+  sortFilter: {},
+  headerImage: '',
+  dateRange: false,
+  selectedOption: 0,
+  isTabLoading: false,
+  setSelectedMode: '',
+  isRefreshing: false,
+  isListLoading: false,
+  isGraphLoading: false,
+  selectedMarkedDates: {},
+  dateFilter: Chronodata[1],
+  selectedDateDay: formatDate(),
+  selectedEndDate: getEndDate(),
+  tabsData: defaultTableTopViewData,
+  selectedStartDate: getStartDate(),
+};
+
+const [state, updateState] = useSimpleReducer(initialState);
+const dispatch = useAppThunkDiapatch();
+
+```
+
+### Event Handlers
+
+- **getListData**: Fetches sales data from the API based on the selected date filter and updates the state.
+- **getTabData**: Fetches tab data from the API and updates the state.
+- **getGraphData**: Fetches graph data from the API and updates the state.
+- **onChangeDateFilter**: Handles the change in date filter and updates the state accordingly.
+- **handleRefresh**: Refreshes the sales data and updates the state.
+- **onPressApplyFilter**: Applies the selected date filter and updates the state.
+- **onPressOrder**: Opens a modal for sorting the sales data and updates the state based on the selected sorting criteria.
+
+### API Integration
+
+The Sales Screen integrates with APIs to fetch and filter sales data:
+
+- **getListData**: Retrieves the sales data from the backend.
+- **getTabData**: Retrieves the tab data from the backend.
+- **getGraphData**: Retrieves the graph data from the backend.
+
+```javascript
+const getListData = async (payload?: any) => {
+  updateState({ isListLoading: true });
+  try {
+    const res: any = await networkMethods.getApiCall(endpoint.salesListing, {
+      type: dateFilter?.id,
+      siteId: selectedLocation?.site_id,
+      ...(setSelectedMode?.length > 0
+        ? {
+            startDate:
+              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
+            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
+          }
+        : { ...getCustomDate() }),
+      ...payload,
+    });
+    updateState({ isListLoading: false, isRefreshing: false });
+    const result = res?.data?.data;
+    updateState({ listData: result });
+  } catch (error: any) {
+    updateState({ isListLoading: false, isRefreshing: false });
+  }
+};
+
+```
+
+### Chart Configuration
+
+The bar chart uses the Chart component with custom configurations:
+
+- **Chart**: Displays sales metrics such as gross car count, non-wash sales, and total sales amount using a bar chart visualization.
+
+### Custom Hooks
+
+- **useSimpleReducer**: Manages the state of the component using a simple reducer pattern.
+
+
+### Dynamic Features
+
+- **Real-Time Data Updates**: Updates sales metrics dynamically using API calls.
+- **Interactive Filtering**: Users can customize the data view based on their requirements.
+- **Responsive Design**: Ensures a user-friendly experience across all device sizes.
+
+
+### Tabs Navigation
+
+The TableTopView component manages the tab navigation for switching between different sales metrics.
+
+## Navigation
+
+The Sales Screen allows navigation between tabs and interaction with chart data. Users can also refresh data or select a different timeframe for analysis.
+
+## Conclusion
+
+The Sales Screen offers an intuitive and visually appealing way to analyze sales data across various categories. With interactive charts, filtering options, and dynamic data updates, it enhances user engagement and provides meaningful insights into sales performance.
+
+
+
+

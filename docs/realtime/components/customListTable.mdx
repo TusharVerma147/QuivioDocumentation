@@ -1,0 +1,112 @@
+# CustomListTable
+
+The CustomListTable component is a reusable UI element designed to display tabular data dynamically. It supports various features, including search functionality, custom item rendering, and header customization. This component is optimized for seamless integration into React Native applications.
+
+
+
+
+## Usage
+
+### Example Image
+
+
+<figure> <img src="/img/inventory/customTable.png" alt="This is an example image  of CustomListTable" width="300" height="600"/></figure>
+
+
+### Basic Implementation
+
+```jsx
+import React from 'react';
+import CustomListTable from './CustomListTable';
+
+const sampleData = [
+  { id: 1, name: 'Item 1', date: '2025-01-01' },
+  { id: 2, name: 'Item 2', date: '2025-01-02' },
+];
+
+const App = () => (
+  <CustomListTable
+    data={sampleData}
+    headerData={[{ label: 'ID' }, { label: 'Name' }, { label: 'Date' }]}
+    onPressOptions={(item, index) => console.log('Options pressed for', item)}
+    cardLabel="Sample Table"
+    isSearchEnabled
+    onSearchText={(text) => console.log('Search:', text)}
+  />
+);
+
+export default App;
+```
+
+## Props
+
+| Prop Name                | Type        | Default         | Description                                             |
+| ------------------------ | ----------- | --------------- | ------------------------------------------------------- |
+| `data`              | `Array` | `[]`                  | The data to be displayed in the table.                     |
+| `headerData`              | `Array`| `[]`   | The main amount or value to be displayed prominently.                       |
+| `isSearchEnabled`          | `boolean` | `false`           |  Enables the search functionality.     |
+| `onSearchText`              | `function`| `() => {}`      |  Callback when the search text changes. |
+| `onPressOptions`           | `function` | `() => {}`      | Callback when the options button is pressed.    |
+| `threeDots`           | `boolean`      | `false`    |   Shows the three dots menu for each row.  |
+| `isLoading`        | `boolean`      | `false`    |  Displays a loading indicator when true.                                  |
+| `cardLabel`          | `string`      |  `''`   |  Displays a label above the table.header.                                 |
+| `onPressOrder`          | `function`| `() => {}`      |  Callback for handling the order icon press.   |  
+| `onEndReached`          | `function` | `() => {}`      | Callback triggered when the end of the list is reached. |  
+| `onEndReachedThreshold`          | `number` |   `0.5`      |  Specifies how close to the bottom of the list the onEndReached is triggered.|  
+| `ListFooterComponent`          | `Component` |   `null`      |  Component to render at the end of the list. |  
+   
+
+## Methods and Utilities
+
+The component provides internal methods to enhance usability:
+
+- **`_renderItem`**: Handles the rendering of individual rows in the table.
+- **`listHeader`**: Renders the table header based on headerData.
+
+## Features
+
+- **Dynamic Data Rendering**: Displays tabular data dynamically based on the provided data prop.
+- **Search Functionality**: Users can search through the data with a responsive input.
+- **Customizable Headers**: Define headers easily with the headerData prop.
+- **Three Dots Menu**: Optional menu icon for additional actions per row.
+- **Loaders and Placeholders**: Built-in support for showing loaders and empty results.
+- **Sticky Headers**: Keeps headers visible during scrolling.
+
+### Customizing the ListTable
+
+## Adding Custom Styling
+
+```jsx
+<CustomListTable
+  data={data}
+  headerData={[{ label: 'Column 1' }, { label: 'Column 2' }]}
+  customRootStyle={{ backgroundColor: 'lightgray' }}
+  listContentContainerStyle={{ padding: 20 }}
+/>
+```
+
+## Adding a Footer Component
+
+```jsx
+<CustomListTable
+  data={data}
+  ListFooterComponent={() => <Text>End of List</Text>}
+/>
+```
+## Handling Search
+
+```jsx
+<CustomListTable
+  data={data}
+  isSearchEnabled
+  onSearchText={(text) => console.log('Searching for:', text)}
+/>
+```
+
+
+
+## Notes
+
+- Ensure the headerData matches the structure of the data for proper alignment.
+- Utilize the onPressOptions and threeDots for contextual actions per row.
+- The component is optimized for both Android and iOS platforms.

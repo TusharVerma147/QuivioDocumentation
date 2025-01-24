@@ -1,0 +1,63 @@
+
+# Net Sales
+
+The Net Sales Screen displays the organization's sales performance, providing insights into revenue trends and product-specific statistics.
+
+<figure> <img src="/img/inventory/netSales.png" alt="This is an example image  of NetSales" width="300" height="600" /></figure>
+
+## Overview
+
+The Net Sales Screen allows users to:
+
+- View total, projected, and past sales figures.
+- Compare performance across different time frames.
+- Analyze sales by category.
+
+## Key Features
+
+- **Interactive Graphs**: Displays trends in sales over time.
+- **Category Filters**: Allows filtering by product category.
+- **Dynamic Data:**: Updates sales figures dynamically using backend APIs.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Graph Libraries**: For interactive charts.
+- **Redux**: netSalesReducer for state management.
+- **Utilities**: CurrencyFormatter for formatting numbers.
+
+### State Management
+
+The screen uses Redux to manage state:
+
+```javascript
+const initialState = {
+  salesData: [],
+  isLoading: false,
+  error: null,
+};
+```
+### Event Handlers
+
+- **onCategorySelect**: Retrieves sales statistics from the server.
+- **refreshSalesData**:  Fetches the latest sales figures.
+
+### API Integration
+
+- **fetchNetSalesData API**: Retrieves sales statistics from the server.
+
+## Navigation
+
+Integrated into the dashboard, with options to drill down into specific categories or time frames.
+
+## Conclusion
+
+The Net Sales Screen provides critical insights into sales performance, empowering users with actionable data.
+
+
+
+
+

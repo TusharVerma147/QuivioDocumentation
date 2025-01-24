@@ -1,0 +1,107 @@
+
+# RankCard
+
+The RankCard component is a versatile UI element designed to display ranking information dynamically. This component is optimized for seamless integration into your app, ensuring a polished and visually appealing presentation of data.
+
+## Usage
+
+### Basic Example
+
+```javascript
+import React from 'react';
+import RankCard from './RankCard';
+import rankImage from '../assets/rank-background.jpg';
+
+const rankData = {
+  label: 'Top Performer',
+  amount: '12,345',
+  progress: '45%',
+  sourceImage: rankImage,
+  onPressCard: () => console.log('Card pressed'),
+};
+
+const App = () => (
+  <RankCard
+    label={rankData.label}
+    amount={rankData.amount}
+    progress={rankData.progress}
+    sourceImage={rankData.sourceImage}
+    onPressCard={rankData.onPressCard}
+  />
+);
+
+export default App;
+```
+
+## Props
+
+| Prop Name            | Type          | Default               | Description                                                |
+| -------------------- | ------------- | --------------------- | ---------------------------------------------------------- |
+| `label`              | `string`      | `''`                  | The label or title to display on the card.                      |
+| `amount`              | `string/number`      | `''`                  | The main amount or value to be displayed prominently.                       |
+| `progress`              | `string`      | `''`                  | Progress percentage or description.                     |
+| `sourceImage`          | `ImageSource` | `null`           | The background image for the card, enhancing visual appeal.      |
+| `currency`              | `string`      | `$`                  | The currency symbol displayed alongside the amount. |
+| `onPressCard`           | `function` | () => {}        | Callback function triggered when the card is pressed.    |
+| `containerStyle`          | `object`      | `{}`   | Additional styling for the card container.                                   |
+| `containerStyle`          | `object`      | `{}`   | Additional styling for the card container.                                   |
+| `cardWidth`          | `number`      | `(screenWidth - 60) / 2.5`   | Width of the card.                                  |
+| `aspectRatio`          | `number`      | `getWp(133, 133, 133) / getHp(153, 153, 153)`  | Aspect ratio of the card.     |                            |
+
+## Features
+
+- **Dynamic Options**: Options are rendered dynamically from a data array.
+- **Interactive Design**: Each card is tappable, and the activeOpacity enhances user feedback.
+- **Customizable Styles**: Easily override default styles with custom styles for any part of the component.
+- **Icon Integration**:  Each option includes an icon alongside its label.
+
+
+## Styling
+
+The RankCard component uses styles defined in a separate styles file. Example styles for customization:
+
+### Example Styling
+
+```javascript
+import { StyleSheet } from 'react-native';
+import { getHp, getWp } from '@checkpoint/utils/dimension';
+import { colors } from '@checkpoint/utils';
+
+const styles = StyleSheet.create({
+  rankImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: getWp(10, 10, 10),
+    overflow: 'hidden',
+  },
+  progressImage: {
+    width: getWp(16, 16, 16),
+    height: getHp(16, 16, 16),
+    marginLeft: 4,
+  },
+});
+
+export default styles;
+```
+
+### Customizing the FullWidthCard
+
+```javascript
+<RankCard
+  label="Gold Member"
+  amount="20,000"
+  progress="80%"
+  sourceImage={require('../assets/gold-rank.jpg')}
+  onPressCard={() => alert('Gold Member Card Pressed')}
+  cardWidth={200}
+  currency="€"
+/>
+```
+
+## Notes
+
+
+- Ensure all required props such as label, amount, and sourceImage are passed for proper rendering.
+- The component is optimized for both Android and iOS platforms.
+- The aspectRatio prop ensures the card maintains consistent dimensions across different devices.
+

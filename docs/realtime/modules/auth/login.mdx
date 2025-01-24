@@ -1,0 +1,86 @@
+
+# Login
+
+The Login Screen is a React Native component that facilitates user authentication by allowing users to input their credentials, validate them, and log into the application. This document provides an overview of the code structure, functionality, and important elements of the Login Screen.
+
+<figure> <img src="/img/inventory/login.png" alt="This is an example image  of Login Screen" width="300" height="600" /></figure>
+
+## Overview
+
+The Login Screen allows users to:
+
+- Input their Username, Password, and Organization Code.
+- View error messages for invalid inputs.
+- Toggle password visibility.
+- Navigate through fields using the keyboard.
+- Authenticate with the backend API.
+- View a loading indicator during authentication.
+
+## Key Features
+
+- **User Input Fields**: Floating input fields for username, password, and organization code.
+- **Validation**: Real-time validation for empty fields with error messages.
+- **Password Toggle**: Allows toggling password visibility.
+- **API Integration**: Sends login data to the backend API.
+- **Loading Indicator**: Displays a loader during API calls.
+- **Carousel**: Displays a sliding carousel of features for the application.
+
+## Code Structure
+
+### Imports
+
+The screen imports several utilities and components such as:
+
+- **Custom Components**: CustomButton, CustomLoader, FloatingInput.
+- **Hooks**: useAppThunkDispatch, useRefs, useSimpleReducer.
+- **Redux**: loginApi, loginReducer, userReducer.
+- **Services**: AnalyticsService, network.
+- **Utilities**: colors, getHp, getWp.
+- **Third-party Libraries**: Carousel, AsyncStorage.
+
+### State Management
+
+The screen uses a simple reducer hook, useSimpleReducer, to manage component state:
+
+```javascript
+const InitialState: InitialStateType = {
+  isLoading: false,
+  userName: '',
+  password: '',
+  orgCode: '',
+  showPassword: true,
+  nameError: '',
+  userNameError: '',
+  passwordError: '',
+  orgCodeError: '',
+  disable: true,
+};
+
+const [state, updateState] = useSimpleReducer({
+  ...InitialState,
+});
+```
+### Event Handlers
+
+- **onPressLoginButton**: Validates inputs and triggers the API call for login.
+- **_getAuthTokenss**: Handles the authentication process, including API call, error handling, and state updates.
+
+### API Integration
+
+The loginApi is dispatched with a payload containing the username, password, and organization code. Successful responses store data in Redux and AsyncStorage.
+
+### Analytics
+
+Logs events for login clicks, success, and failure using AnalyticsService.
+
+## Navigation
+
+On successful login, navigates to the Home Screen.
+
+
+## Conclusion
+
+This Login screen provides a user-friendly interface with robust validation, smooth animations, and a visually appealing layout. It effectively handles authentication while maintaining clean state management and modularity.
+
+
+

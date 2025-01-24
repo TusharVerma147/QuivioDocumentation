@@ -1,0 +1,64 @@
+
+# Weekly Stats
+
+The Weekly Stats component in the Historical Screen provides a week-by-week breakdown of key performance metrics, offering insights into trends and changes over time.
+
+<figure> <img src="/img/inventory/weeklyStats.png" alt="This is an example image  of weeklyStats" width="300" height="600" /></figure>
+
+## Overview
+
+The Weekly Stats component allows users to:
+
+- View weekly performance data.
+- Analyze trends with chart visualizations.
+- Apply date range filters for custom analysis.
+
+## Key Features
+
+- **Weekly Breakdown**:  Displays performance metrics like cars washed, sales, and labor percentages per week.
+- **Chart Representation**: Provides bar or line chart visualizations for weekly trends.
+- **Custom Date Filters**: Enables custom date selection for analysis.
+
+
+## Code Structure
+
+### State Management
+
+```javascript
+const initialState = {
+  weeklyStatsData: [],
+  startDate: '',
+  endDate: '',
+  isLoading: false,
+};
+const [state, updateState] = useSimpleReducer(initialState);
+```
+
+### Event Handlers
+
+- **handleDateChange**: Filters weekly stats based on the selected date range.
+
+### API Integration
+
+- **getWeeklyStatsAPI**: Fetches weekly performance data for the selected date range.
+- **handleRefresh**: Refreshes the data dynamically.
+
+## Analytics
+
+Tracks API call success and failures:
+
+```javascript
+AnalyticsService.logEvent(EVENTS.WEEKLY_STATS_SUCCESS);
+AnalyticsService.logEvent(EVENTS.WEEKLY_STATS_FAILED, { error: error?.message });
+```
+
+## Navigation
+
+The Weekly Stats component is accessible via the tab-based navigation in the Historical Screen.
+
+## Conclusion
+
+Enables week-over-week performance tracking with exportable charts, delivering a granular understanding of operational trends..
+
+
+

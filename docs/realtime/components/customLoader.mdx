@@ -1,0 +1,57 @@
+# CustomLoader
+
+The `CustomLoader` component is a flexible and customizable loading indicator designed for use within our app. It leverages React Native's `ActivityIndicator` to display a spinner while content is being loaded or an operation is in progress.
+
+## Usage
+
+### Example Image
+
+<figure> <img src="/img/inventory/customLoader.png" alt="This is an example image  of Loader" width="300" height="600"/></figure>
+
+### Basic Usage
+
+```jsx
+import React from 'react';
+import CustomLoader from './CustomLoader';
+
+const App = () => {
+  return <CustomLoader />;
+};
+
+export default App;
+```
+
+## Props
+
+| Prop Name     | Type                 | Default        | Description                               |
+| ------------- | -------------------- | -------------- | ----------------------------------------- |
+| `color`       | `string`             | `colors.green` | Specifies the color of the loader.        |
+| `loaderSize`  | `'small' \| 'large'` | `'large'`      | Determines the size of the loader.        |
+| `customStyle` | `ViewStyle`          | `undefined`    | Custom styles for the loader's container. |
+
+
+## Features
+
+- **Customizable Appearance**: You can set the color, size, and position of the loader.
+- **Easy Integration**: Drop the component into any screen to display a spinner.
+
+### Customizing the Loader
+
+```jsx
+<CustomLoader
+  color="red"
+  loaderSize="small"
+  customStyle={{ top: 50, left: 50 }}
+/>
+```
+
+
+
+## Notes
+
+- Ensure that the `color` prop is a valid color string supported by React Native.
+- Use `customStyle` to position the loader appropriately in your layout.
+
+## Contributing
+
+If you'd like to enhance or suggest improvements for the `CustomLoader`, feel free to contribute by submitting a pull request or providing feedback!
