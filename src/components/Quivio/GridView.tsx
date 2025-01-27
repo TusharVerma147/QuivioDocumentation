@@ -1,5 +1,5 @@
 import React from 'react';
-import './custom.css'; // Ensure your custom CSS is imported
+import './custom.css'; 
 
 const GridView = () => {
     return (

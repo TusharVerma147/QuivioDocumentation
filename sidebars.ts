@@ -36,7 +36,7 @@ const sidebars: SidebarsConfig = {
       },'realtime/modules/home',{
         type: 'category',
         label: 'Present',
-        items: ['realtime/modules/present/presentStats','realtime/modules/present/carCount','realtime/modules/present/netSales','realtime/modules/present/labor','realtime/modules/present/topGreeters','realtime/modules/present/employees',],
+        items: ['realtime/modules/present/presentStats','realtime/modules/present/carCount','realtime/modules/present/netSales','realtime/modules/present/labor','realtime/modules/present/topGreeters','realtime/modules/present/bestSellers','realtime/modules/present/employees',],
       },
       {
         type: 'category',
@@ -46,7 +46,7 @@ const sidebars: SidebarsConfig = {
       {
         type: 'category',
         label: 'Settings',
-        items: ['realtime/modules/settings/settings','realtime/modules/settings/siteListing',],
+        items: ['realtime/modules/settings/siteListing','realtime/modules/settings/aboutUs','realtime/modules/settings/t&c','realtime/modules/settings/logout',],
       },
       {
         type: 'category',

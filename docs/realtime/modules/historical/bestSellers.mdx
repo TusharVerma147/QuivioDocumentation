@@ -1,7 +1,7 @@
 
 # Best Sellers
 
-The Best Sellers component provides a list of the top-selling items, allowing users to analyze sales performance over a specific period.
+The Best Sellers component in the Historical Screen provides a detailed breakdown of the top-performing products or services at a selected location, offering insights into their performance metrics such as quantity sold and net sales.
 
 <figure> <img src="/img/inventory/historicalSellers.png" alt="This is an example image  of best Sellers" width="300" height="600" /></figure>
 
@@ -9,15 +9,15 @@ The Best Sellers component provides a list of the top-selling items, allowing us
 
 The Best Sellers component allows users to:
 
-- View the top-selling items.
-- Analyze sales data and revenue generation.
-- Apply date range filters to view targeted sales data.
+- View the top-performing products or services based on quantity sold and net sales.
+- Analyze trends and performance over time.
+- Apply date range filters for custom analysis.
 
 ## Key Features
 
-- **Top-Selling Items**:  Displays items ranked by total sales and revenue.
-- **Key Metrics**: Includes item details like sales count and revenue.
-- **Custom Date Filters**: Allows filtering by date range for targeted analysis.
+- **Top Performers**: Displays the best-selling products or services based on quantity sold and net sales.
+- **Custom Date Filters**: Enables custom date selection for analysis.
+- **Dynamic Data**: Updates data based on the selected date range and location.
 
 ## Code Structure
 
@@ -25,39 +25,37 @@ The Best Sellers component allows users to:
 
 ```javascript
 const initialState = {
-  topGreetersData: [],
-  startDate: '',
-  endDate: '',
-  isLoading: false,
+  bestSellerData: [],
+  selectedStartDate: '',
+  selectedEndDate: '',
+  isBestSellerLoading: false,
 };
 const [state, updateState] = useSimpleReducer(initialState);
 ```
 
 ### Event Handlers
 
-- **handleDateChange**: Filters greeter data based on the selected date range.
-- **handleRefresh**: Refreshes the greeter rankings dynamically.
+- **handleDateChange**: Filters best sellers data based on the selected date range.
+- **handleRefresh**: Refreshes the data dynamically.
 
 ### API Integration
 
-- **getTopGreetersAPI**: Fetches data for the top greeters over a specified period.
+- **getBestSellersData**: Fetches best sellers data for the selected date range.
 
 ## Analytics
 
 Logs API events:
 
 ```javascript
-AnalyticsService.logEvent(EVENTS.TOP_GREETERS_SUCCESS);
-AnalyticsService.logEvent(EVENTS.TOP_GREETERS_FAILED, { error: error?.message });
+AnalyticsService.logEvent(EVENTS.HISTORICAL_BEST_SELLER_SUCCESS);
+AnalyticsService.logEvent(EVENTS.HISTORICAL_BEST_SELLER_FAILED, { error: error?.message });
 ```
 
 ## Navigation
 
-The Top Greeters component is accessible via the tab-based navigation in the Historical Screen.
+The Best Sellers component is accessible via the tab-based navigation in the Historical Screen.
 
-## Conclusion
 
-The Historical Screen provides an in-depth overview of key performance metrics, enabling users to analyze past performance effectively. Its intuitive tab-based navigation, data filtering options, and API integration ensure a seamless user experience.
 
 
 

@@ -1,7 +1,7 @@
 
 # Top Greeters
 
-The Top Greeters component highlights the best-performing greeters based on key metrics, such as customer interactions and upselling success.
+The Top Greeters component in the Historical Screen provides a detailed breakdown of the top-performing greeters at a selected location, offering insights into their performance metrics such as car count, memberships, and sales amounts.
 
 <figure> <img src="/img/inventory/historicalGreeters.png" alt="This is an example image  of Historical Greeters" width="300" height="600" /></figure>
 
@@ -9,15 +9,16 @@ The Top Greeters component highlights the best-performing greeters based on key 
 
 The Top Greeters component allows users to:
 
-- View rankings of greeters based on performance metrics.
-- Analyze individual greeters' performance.
-- Apply custom date filters to analyze performance over time.
+- View the top-performing greeters based on various performance metrics.
+- Analyze trends and performance over time.
+- Apply date range filters for custom analysis.
 
 ## Key Features
 
-- **Top-Selling Items**:  Lists greeters in descending order of performance.
-- **Detailed Insights**: Displays stats such as total interactions and upselling percentages.
-- **Custom Date Filters**: Allows filtering by date range for targeted analysis.
+- **Top Performers**: Displays the top greeters based on car count, memberships, and sales amounts.
+- **Custom Date Filters**: Enables custom date selection for analysis.
+- **Dynamic Data**: Updates data based on the selected date range and location.
+
 
 ## Code Structure
 
@@ -25,10 +26,10 @@ The Top Greeters component allows users to:
 
 ```javascript
 const initialState = {
-  bestSellersData: [],
-  startDate: '',
-  endDate: '',
-  isLoading: false,
+  topGreetersData: [],
+  selectedStartDate: '',
+  selectedEndDate: '',
+  isTopGreetersLoading: false,
 };
 const [state, updateState] = useSimpleReducer(initialState);
 ```
@@ -40,24 +41,22 @@ const [state, updateState] = useSimpleReducer(initialState);
 
 ### API Integration
 
-- **getBestSellersAPI:**: Fetches data for the best-selling items over a specified period.
+- **getTopGreetersData**: Fetches top greeters data for the selected date range.
 
 ## Analytics
 
 Tracks API events:
 
 ```javascript
-AnalyticsService.logEvent(EVENTS.BEST_SELLERS_SUCCESS);
-AnalyticsService.logEvent(EVENTS.BEST_SELLERS_FAILED, { error: error?.message });
+AnalyticsService.logEvent(EVENTS.HISTORICAL_TOP_GREETERS_SUCCESS);
+AnalyticsService.logEvent(EVENTS.HISTORICAL_TOP_GREETERS_FAILED, { error: error?.message });
 ```
 
 ## Navigation
 
-The Best Sellers component is accessible via the tab-based navigation in the Historical Screen.
+The Top Greeters component is accessible via the tab-based navigation in the Historical Screen.
 
-## Conclusion
 
-The Historical Screen provides an in-depth overview of key performance metrics, enabling users to analyze past performance effectively. Its intuitive tab-based navigation, data filtering options, and API integration ensure a seamless user experience.
 
 
 

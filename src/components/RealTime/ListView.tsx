@@ -1,14 +1,14 @@
 import React from 'react';
-import './custom.css'; // Ensure your custom CSS is imported
+import './custom.css'; 
 
-const GridView = () => {
+const ListView = () => {
     return (
-        <div className="grid-container">
+        <div className="list-container">
             <a href="/realtime/components/baseInput" target="_self" rel="noopener noreferrer">
-                <div className="grid-item">Components</div>
+                <div className="list-item">Components</div>
             </a>
             <a href="/realtime/modules/auth/login" target="_self" rel="noopener noreferrer">
-                <div className="grid-item">Modules</div>
+                <div className="list-item">Modules</div>
             </a>
             {/* <a href="/quivio/modules/intro" target="_self" rel="noopener noreferrer">
                 <div className="grid-item">Modules</div>
@@ -17,4 +17,4 @@ const GridView = () => {
     );
 };
 
-export default GridView;
+export default ListView;
