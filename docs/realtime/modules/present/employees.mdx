@@ -46,6 +46,28 @@ const initialState = {
 
 - **getEmployeeMetrics API**: Retrieves detailed employee data.
 
+**Employees**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/present/employee-list?EmpType=1&siteId=1&page=1&limit=10"\
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "result": [],
+        "nextPageStatus": false
+    }
+}
+```
+
 ## Navigation
 
 Accessible from the dashboard with links to individual employee profiles.

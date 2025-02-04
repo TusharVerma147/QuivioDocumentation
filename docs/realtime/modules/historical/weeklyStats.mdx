@@ -1,7 +1,7 @@
 
 # Weekly Stats
 
-The Weekly Stats component in the Historical Screen provides a week-by-week breakdown of key performance metrics, offering insights into trends and changes over time.
+The Weekly Stats  in the Historical Screen provides a week-by-week breakdown of key performance metrics, offering insights into trends and changes over time.
 
 <figure> <img src="/img/inventory/weeklyStats.png" alt="This is an example image  of weeklyStats" width="300" height="600" /></figure>
 
@@ -41,7 +41,54 @@ const [state, updateState] = useSimpleReducer(initialState);
 ### API Integration
 
 - **getWeeklyStatsAPI**: Fetches weekly performance data for the selected date range.
-- **handleRefresh**: Refreshes the data dynamically.
+
+**Weekly Stats Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/historical/stats?type=2&siteId=1&startDate=2025-02-02&endDate=2025-02-08&isCurrentDate=true" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NjA3NTcsImV4cCI6MTc0MTI1Mjc1N30.cknoFbiY-PPHdXtsLtZzEp0OY3olmZwpCkcrsxPhsBU" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "title": "Cars Washed",
+            "subCategory": "cars",
+            "count": 1536,
+            "previousCount": 1238,
+            "difference": 24.07
+        },
+        {
+            "title": "Total Sales",
+            "subCategory": "sales",
+            "count": 9240,
+            "previousCount": 8180,
+            "difference": 12.96
+        },
+        {
+            "title": "Non-wash$/car",
+            "subCategory": "non_wash_cost_per_car",
+            "count": 0,
+            "previousCount": 0,
+            "difference": 0
+        },
+        {
+            "title": "Open Days",
+            "subCategory": "open_days",
+            "count": 2,
+            "previousCount": 3,
+            "difference": -33.33
+        }
+    ]
+}
+```
 
 ## Analytics
 

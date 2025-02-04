@@ -1,7 +1,7 @@
 
 # Compare
 
-The Compare Screen is a React Native component designed to display comparative data across different categories such as sales, labor, and membership. It provides users with interactive and detailed visualizations of comparative metrics using charts and tables. The screen allows users to compare data across different time periods or sites, enhancing data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Compare Screen.
+The Compare Screen in Charts is  designed to display comparative data across different categories such as sales, labor, and membership. It provides users with interactive and detailed visualizations of comparative metrics using charts and tables. The screen allows users to compare data across different time periods or sites, enhancing data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Compare Screen.
 
 <figure> <img src="/img/inventory/comparechart.png" alt="This is an example image  of Compare Chart" width="300" height="600" /></figure>
 
@@ -88,48 +88,125 @@ The Compare Screen integrates with APIs to fetch and filter comparative data:
 - **getCompareData**: Retrieves the labor data from the backend.
 - **getGraphData**: Retrieves the graph data from the backend.
 
+**Tab Data**:
 ```javascript
-const getCompareData = async (payload?: any, payload2?: any) => {
-  const payload1 = {
-    siteId: selectedLocation?.site_id,
-    categoryType,
-    isCurrentDate: !isPastDate,
-    dateFilter: dateFilter.id,
-    ...(setSelectedMode?.length > 0
-      ? {
-          startDate:
-            dateFilter.id !== 2 ? selectedDateDay : selectedStartDate,
-          ...(dateFilter.id === 2 ? { endDate: selectedEndDate } : {}),
-        }
-      : { ...getCustomDate() }),
-    ...payload,
-  };
-  try {
-    updateState({ isLoading: true });
-    const res: any = await dispatch(getCompareTabData(payload1));
-    const newData = res.payload.data.data.map(
-      mapStatisticsDataWithFormatting,
-    );
-    AnalyticsService.logEvent(EVENTS.COMPARE_TAB_SUCCESS, {
-      ...payload1,
-    });
-    await getGraphData(payload2);
-    updateState({
-      isLoading: false,
-      tableStats: newData,
-      ...(!selectedSubCategoryType
-        ? { selectedSubCategoryType: res.payload.data.data[0] }
-        : {}),
-    });
-  } catch (error: any) {
-    AnalyticsService.logEvent(EVENTS.COMPARE_TAB_FAILED, {
-      error: error?.message,
-      ...payload1,
-    });
-    updateState({ isLoading: false });
-  }
-};
+curl -X GET "https://checkpointqa-api.quivio.com/compare/tab?siteId=1&categoryType=1&isCurrentDate=true&dateFilter=2&startDate=2025-02-02&endDate=2025-02-08&compareWith=1&periodType=1" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
 
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "title": "Cars",
+            "subCategory": "cars",
+            "count": 1536,
+            "previousCount": 1238,
+            "difference": 24.07
+        },
+        {
+            "title": "Sales",
+            "subCategory": "sales",
+            "count": 9240,
+            "previousCount": 8180,
+            "difference": 12.96
+        },
+        {
+            "title": "Non-wash$/ car",
+            "subCategory": "non_wash_cost_per_car",
+            "count": 0,
+            "previousCount": 0,
+            "difference": 0
+        }
+    ]
+}
+```
+
+**Graph Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/compare/graph?siteId=1&categoryType=1&dateFilter=2&subCategoryType=1&startDate=2025-02-02&endDate=2025-02-08&compareWith=1&periodType=1" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "current": [
+            {
+                "date": "2025-02-02",
+                "value": 804
+            },
+            {
+                "date": "2025-02-03",
+                "value": 732
+            },
+            {
+                "date": "2025-02-04",
+                "value": 0
+            },
+            {
+                "date": "2025-02-05",
+                "value": 0
+            },
+            {
+                "date": "2025-02-06",
+                "value": 0
+            },
+            {
+                "date": "2025-02-07",
+                "value": 0
+            },
+            {
+                "date": "2025-02-08",
+                "value": 0
+            }
+        ],
+        "previous": [
+            {
+                "date": "2025-01-26",
+                "value": 945
+            },
+            {
+                "date": "2025-01-27",
+                "value": 293
+            },
+            {
+                "date": "2025-01-28",
+                "value": 1006
+            },
+            {
+                "date": "2025-01-29",
+                "value": 859
+            },
+            {
+                "date": "2025-01-30",
+                "value": 647
+            },
+            {
+                "date": "2025-01-31",
+                "value": 446
+            },
+            {
+                "date": "2025-02-01",
+                "value": 1022
+            }
+        ]
+    }
+}
 ```
 
 ### Chart Configuration

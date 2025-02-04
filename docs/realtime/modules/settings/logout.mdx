@@ -63,6 +63,26 @@ const [isModalVisible, setIsModalVisible] = useState(false);
 - **logoutApi**: Handles the log out process on the backend.
 - **clearToken**: Clears the user's authentication token from the Redux store and the network headers.
 
+**To Logout**:
+```javascript
+curl -X PATCH \
+  -H "Accept: application/json, text/plain, */*" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg1ODUwMTUsImV4cCI6MTc0MTE3NzAxNX0.RzycmER2m3ia583HjaNxQ82bIrCf_e_6FqptdFHry_I" \
+  -H "timezone: -300" \
+  -H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab" \
+  --max-time 600 \
+  -d '{"key": "value"}' \
+  "https://checkpointqa-api.quivio.com/onboarding/logout"
+```
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Logout successfully",
+    "data": {}
+}
+```
 
 ### Analytics
 
@@ -74,7 +94,9 @@ AnalyticsService.logEvent(EVENTS.LOGOUT_SUCCESS);
 AnalyticsService.logEvent(EVENTS.LOGOUT_CANCELLED);
 ```
 
+### Navigation
 
+Navigates to the Login Screen after logging Out.
 
 
 

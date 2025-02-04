@@ -1,7 +1,7 @@
 
 # Labor
 
-The Labour Screen is a React Native component designed to display labor-related data in a graphical and tabular format. It provides users with interactive and detailed visualizations of labor metrics such as cars per labor hour, cost per labor hour, and labor percentage across various sites. The screen uses charts, tables, and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Labour Screen.
+The Labour Screen in Charts is  designed to display labor-related data in a graphical and tabular format. It provides users with interactive and detailed visualizations of labor metrics such as cars per labor hour, cost per labor hour, and labor percentage across various sites. The screen uses charts, tables, and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Labour Screen.
 
 <figure> <img src="/img/inventory/laborchart.png" alt="This is an example image  of Labor Chart" width="300" height="600" /></figure>
 
@@ -86,30 +86,325 @@ The Labour Screen integrates with APIs to fetch and filter labor data:
 - **getTabData**:Retrieves the tab data from the backend.
 - **getGraphData**: Retrieves the graph data from the backend.
 
+**Tab Data**:
 ```javascript
-const getLaborData = async (payload?: any) => {
-  updateState({ isLaborLoading: true });
-  try {
-    const res: any = await networkMethods.getApiCall(endpoint.laborListing, {
-      type: dateFilter?.id,
-      siteId: selectedLocation?.site_id,
-      ...(setSelectedMode?.length > 0
-        ? {
-            startDate:
-              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
-            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
-          }
-        : { ...getCustomDate() }),
-      ...payload,
-    });
-    updateState({ isLaborLoading: false, isRefreshing: false });
-    const result = res?.data?.data;
-    updateState({ laborListData: result });
-  } catch (error: any) {
-    updateState({ isLaborLoading: false, isRefreshing: false });
-  }
-};
+curl -X GET "https://checkpointqa-api.quivio.com/labour/buttons?type=2&isCurrentDate=true&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
 
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "title": "Cars/Labor hour",
+            "subCategory": "car_per_labour_hour",
+            "count": 10.13,
+            "previousCount": 8.35,
+            "difference": 21.32
+        },
+        {
+            "title": "Labor$/car",
+            "subCategory": "labour_cost_per_car",
+            "count": 1.22,
+            "previousCount": 1.5,
+            "difference": -18.67
+        },
+        {
+            "title": "Labor %",
+            "subCategory": "labour_percentage",
+            "count": 20.26,
+            "previousCount": 22.75,
+            "difference": -10.95
+        }
+    ]
+}
+```
+
+**Graph Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/labour/graph?type=2&graphType=1&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "current": [
+            {
+                "date": "2025-02-02",
+                "value": 10.07
+            },
+            {
+                "date": "2025-02-03",
+                "value": 10.2
+            },
+            {
+                "date": "2025-02-04",
+                "value": 0
+            },
+            {
+                "date": "2025-02-05",
+                "value": 0
+            },
+            {
+                "date": "2025-02-06",
+                "value": 0
+            },
+            {
+                "date": "2025-02-07",
+                "value": 0
+            },
+            {
+                "date": "2025-02-08",
+                "value": 0
+            }
+        ],
+        "previous": [
+            {
+                "date": "2025-01-26",
+                "value": 13
+            },
+            {
+                "date": "2025-01-27",
+                "value": 3.88
+            },
+            {
+                "date": "2025-01-28",
+                "value": 14.52
+            },
+            {
+                "date": "2025-01-29",
+                "value": 9.7
+            },
+            {
+                "date": "2025-01-30",
+                "value": 9
+            },
+            {
+                "date": "2025-01-31",
+                "value": 6.91
+            },
+            {
+                "date": "2025-02-01",
+                "value": 13.36
+            }
+        ]
+    }
+}
+```
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "current": [
+            {
+                "date": "2025-02-02",
+                "value": 1.2
+            },
+            {
+                "date": "2025-02-03",
+                "value": 1.23
+            },
+            {
+                "date": "2025-02-04",
+                "value": 0
+            },
+            {
+                "date": "2025-02-05",
+                "value": 0
+            },
+            {
+                "date": "2025-02-06",
+                "value": 0
+            },
+            {
+                "date": "2025-02-07",
+                "value": 0
+            },
+            {
+                "date": "2025-02-08",
+                "value": 0
+            }
+        ],
+        "previous": [
+            {
+                "date": "2025-01-26",
+                "value": 0.94
+            },
+            {
+                "date": "2025-01-27",
+                "value": 3.32
+            },
+            {
+                "date": "2025-01-28",
+                "value": 0.94
+            },
+            {
+                "date": "2025-01-29",
+                "value": 1.33
+            },
+            {
+                "date": "2025-01-30",
+                "value": 1.49
+            },
+            {
+                "date": "2025-01-31",
+                "value": 1.73
+            },
+            {
+                "date": "2025-02-01",
+                "value": 0.91
+            }
+        ]
+    }
+}
+```
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "current": [
+            {
+                "date": "2025-02-02",
+                "value": 18
+            },
+            {
+                "date": "2025-02-03",
+                "value": 23
+            },
+            {
+                "date": "2025-02-04",
+                "value": 0
+            },
+            {
+                "date": "2025-02-05",
+                "value": 0
+            },
+            {
+                "date": "2025-02-06",
+                "value": 0
+            },
+            {
+                "date": "2025-02-07",
+                "value": 0
+            },
+            {
+                "date": "2025-02-08",
+                "value": 0
+            }
+        ],
+        "previous": [
+            {
+                "date": "2025-01-26",
+                "value": 13
+            },
+            {
+                "date": "2025-01-27",
+                "value": 82
+            },
+            {
+                "date": "2025-01-28",
+                "value": 19
+            },
+            {
+                "date": "2025-01-29",
+                "value": 24
+            },
+            {
+                "date": "2025-01-30",
+                "value": 29
+            },
+            {
+                "date": "2025-01-31",
+                "value": 32
+            },
+            {
+                "date": "2025-02-01",
+                "value": 16
+            }
+        ]
+    }
+}
+```
+
+**List Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/labour/list?type=2&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "date": "2025-02-02",
+            "carPerLabour": 10.07,
+            "costPerLabour": 1.2,
+            "labourPercent": 18
+        },
+        {
+            "date": "2025-02-03",
+            "carPerLabour": 10.2,
+            "costPerLabour": 1.23,
+            "labourPercent": 23
+        },
+        {
+            "date": "2025-02-04",
+            "carPerLabour": 0,
+            "costPerLabour": 0,
+            "labourPercent": 0
+        },
+        {
+            "date": "2025-02-05",
+            "carPerLabour": 0,
+            "costPerLabour": 0,
+            "labourPercent": 0
+        },
+        {
+            "date": "2025-02-06",
+            "carPerLabour": 0,
+            "costPerLabour": 0,
+            "labourPercent": 0
+        },
+        {
+            "date": "2025-02-07",
+            "carPerLabour": 0,
+            "costPerLabour": 0,
+            "labourPercent": 0
+        },
+        {
+            "date": "2025-02-08",
+            "carPerLabour": 0,
+            "costPerLabour": 0,
+            "labourPercent": 0
+        }
+    ]
+}
 ```
 
 ### Chart Configuration

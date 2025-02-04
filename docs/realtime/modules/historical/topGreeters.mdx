@@ -1,7 +1,7 @@
 
 # Top Greeters
 
-The Top Greeters component in the Historical Screen provides a detailed breakdown of the top-performing greeters at a selected location, offering insights into their performance metrics such as car count, memberships, and sales amounts.
+The Top Greeters  in the Historical Screen provides a detailed breakdown of the top-performing greeters at a selected location, offering insights into their performance metrics such as car count, memberships, and sales amounts.
 
 <figure> <img src="/img/inventory/historicalGreeters.png" alt="This is an example image  of Historical Greeters" width="300" height="600" /></figure>
 
@@ -42,6 +42,52 @@ const [state, updateState] = useSimpleReducer(initialState);
 ### API Integration
 
 - **getTopGreetersData**: Fetches top greeters data for the selected date range.
+
+**Top Greeters Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/historical/top-greeter?type=2&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NjA3NTcsImV4cCI6MTc0MTI1Mjc1N30.cknoFbiY-PPHdXtsLtZzEp0OY3olmZwpCkcrsxPhsBU" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "response": [
+            {
+                "name": "Akearra Shadix",
+                "carCount": 36,
+                "memberships": 18,
+                "saleAmount": 465
+            },
+            {
+                "name": "Kaison Holadia",
+                "carCount": 23,
+                "memberships": 12,
+                "saleAmount": 264.99
+            },
+            {
+                "name": "Grayson Todd",
+                "carCount": 12,
+                "memberships": 6,
+                "saleAmount": 120
+            },
+            {
+                "name": "Brock Cole",
+                "carCount": 2,
+                "memberships": 1,
+                "saleAmount": 25
+            }
+        ]
+    }
+}
+```
 
 ## Analytics
 

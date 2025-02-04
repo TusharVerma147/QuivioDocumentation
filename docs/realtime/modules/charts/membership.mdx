@@ -1,7 +1,7 @@
 
 # Membership
 
-The Membership Screen is a React Native component designed to display membership-related data in a tabular format. It provides users with interactive and detailed visualizations of membership metrics such as member count, current membership value, and new membership sales across various sites. The screen uses tables and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Membership Screen.
+The Membership Screen in Charts is  designed to display membership-related data in a tabular format. It provides users with interactive and detailed visualizations of membership metrics such as member count, current membership value, and new membership sales across various sites. The screen uses tables and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Membership Screen.
 
 <figure> <img src="/img/inventory/membershiptable.png" alt="This is an example image  of Membership Table" width="300" height="600" /></figure>
 
@@ -80,67 +80,281 @@ The Membership Screen integrates with APIs to fetch and filter membership data:
 
 - **getData**: Retrieves the membership data from the backend.
 
+**Membership Data**:
 ```javascript
-const getData = async (payload?: any) => {
-  updateState({ isLoading: true });
+curl -X GET "https://checkpointqa-api.quivio.com/membership?dateFilter=2&startDate=2025-02-02&endDate=2025-02-08&siteId=1&page=1&limit=50" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
 
-  try {
-    const res: any = await dispatch(
-      getMembershipSaleList({
-        dateFilter: dateFilter?.id || 1,
-        ...(setSelectedMode?.length > 0
-          ? {
-              startDate:
-                dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
-              ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
-            }
-          : { ...getCustomDate() }),
-        siteId: selectedLocation.site_id,
-        page: 1,
-        limit: 50,
-        ...payload,
-      }),
-    );
-    const result = res?.payload?.data?.data;
-    updateState({
-      memberData: result,
-      memberCount: result?.memberCount || 0,
-      memberValue: result?.monthlyMembershipValue || 0,
-    });
-    AnalyticsService.logEvent(EVENTS.NEW_MEMBERSHIP_SALES_SUCCESS, {
-      dateFilter: dateFilter?.id || 1,
-      ...(setSelectedMode?.length > 0
-        ? {
-            startDate:
-              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
-            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
-          }
-        : { ...getCustomDate() }),
-      siteId: selectedLocation.site_id,
-      page: 1,
-      limit: 50,
-      ...payload,
-    });
-  } catch (error: any) {
-    AnalyticsService.logEvent(EVENTS.NEW_MEMBERSHIP_SALES_FAILED, {
-      dateFilter: dateFilter?.id || 1,
-      ...(setSelectedMode?.length > 0
-        ? {
-            startDate:
-              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
-            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
-          }
-        : { ...getCustomDate() }),
-      siteId: selectedLocation.site_id,
-      page: 1,
-      limit: 50,
-      ...payload,
-      error: error?.message,
-    });
-  } finally {
-    updateState({ isLoading: false, isRefreshing: false });
-  }
-};
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "memberCount": 6940,
+        "monthlyMembershipValue": 213088.38,
+        "newMembershipSales": {
+            "result": [
+                {
+                    "Plans": "GRAPHENE MONTHLY PLAN $49.99",
+                    "Count": 10,
+                    "Net_Sales": 499.9
+                },
+                {
+                    "Plans": "HOT WAX PLAN $29.99",
+                    "Count": 11,
+                    "Net_Sales": 329.89
+                },
+                {
+                    "Plans": "TIRE SHINE PLAN $24.99",
+                    "Count": 13,
+                    "Net_Sales": 324.87
+                },
+                {
+                    "Plans": "FUSION PAINT SEALANT PLAN $34.99",
+                    "Count": 8,
+                    "Net_Sales": 279.92
+                },
+                {
+                    "Plans": "CERAMIC SHIELD PLAN $39.99",
+                    "Count": 2,
+                    "Net_Sales": 79.98
+                },
+                {
+                    "Plans": "Law Enforcement Honey Glaze $19.99/Mnth",
+                    "Count": 1,
+                    "Net_Sales": 19.99
+                },
+                {
+                    "Plans": "City of Anderson",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Law Enforcement Graphene $29.99/Monthly",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Price of a single wash Ceramic",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Auto King Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Membership Event Giveaways",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Ceramic Annual Plan",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Greenworks Recycling Inc Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Forgotten Veterans Free Washes",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Double J Driving Academy Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Derrick Nixon Trade Out",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Anderson Emergency Medical Services Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Price of a single wash TS",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Upstate Attractions Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Anderson County Coroner Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Dionne Merritt Annual Plan",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Jeffery Baird",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Wood Insulating inc.",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Andrew Patterson Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Chris' Property Services Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Randy Reeves House Account Monthly",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Harris Home Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "AND Avis / Budget Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Robinson Funeral Home",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "AND 5 2 vec Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Hot Wax Annual Plan",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Indigo Pediatric Dentistry Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Daniel Lowry Annual Cash",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "2024 APD",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Bud Hanley Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Cochran Landscape Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Price of a single wash FPS",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "All Pro Coolers LLC Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Carolina Burglar & Fire Alarm Fleet Act",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Graphene Xtreme Annual Plan",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Collins Plan",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "#2 The Ridge at Perry Bend ROUND 2",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Devin Stowers Family",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Bear's Family Plan",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Aaron Kincaid Fleet",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Nissan - Grainger",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "SC Dept of Mental Health",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Debra Cooper Damage Claim Free Year",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Ray Waterman Annual Tire Shine Plan",
+                    "Count": 0,
+                    "Net_Sales": 0
+                },
+                {
+                    "Plans": "Bothi Family",
+                    "Count": 0,
+                    "Net_Sales": 0
+                }
+            ],
+            "nextPageStatus": true
+        }
+    }
+}
 ```
 
 ### Chart Configuration

@@ -33,7 +33,7 @@ The screen imports several utilities and components such as:
 
 - **Custom Components**: HomeHeader, CustomListTable, CurrentStats, CustomLoader, SheetWithBasicSelectors.
 - **Hooks**: useAppSelector, useAppThunkDispatch, useSimpleReducer, useBackHandler, useFocusEffect.
-- **Redux**: getSiteListing, getCurrentStats, getCarWashesData, userReducer.
+- **Redux**: getSiteListing, getCurrentStats, getCarWashesData.
 - **Services**: AnalyticsService, ModalController.
 - **Utilities**: colors, commonStyles, screenNames, addCommasToMoneyValue, getComparisonColumColor, sortArray, getPartOfDay, normalize.
 - **Third-party Libraries**: ImageBackground, ScrollView, StatusBar, RefreshControl, ToastAndroid, BackHandler.
@@ -68,7 +68,177 @@ const [state, updateState] = useSimpleReducer(initialState);
 - **getSiteListAPI**: Fetches site listing data.
 - **getData**:   Fetches current statistics and updates the UI.
 - **getCarWashes**:  Fetches the car wash data and updates the list.
-- **gupdateSiteListing**: Updates the site listing based on the selected location.
+- **getCurrentStats**:  Fetches the current Stats and updates the list.
+
+**Site List**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/site" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg1ODg1NjAsImV4cCI6MTc0MTE4MDU2MH0.YouXdblxguzAaVof9V5cqQ5K33-G2Ya3rXdZy8nzGcI" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "site_id": 1,
+            "code": "PBA1",
+            "latitude": 34.549367,
+            "longitude": -82.673463,
+            "name": "Papa Bear Anderson",
+            "timezone": -300,
+            "localSiteTime": "2025-02-03T08:16:00.000Z",
+            "timezoneString": "America/New_York",
+            "isMaxTimezone": 1,
+            "address1": "3436 Clemson Blvd",
+            "address2": null,
+            "city": "Anderson"
+        },
+        {
+            "site_id": 3,
+            "code": "PBE",
+            "latitude": 34.826488,
+            "longitude": -82.561558,
+            "name": "Papa Bear Easley",
+            "timezone": -300,
+            "localSiteTime": "2025-02-03T08:16:00.000Z",
+            "timezoneString": "America/New_York",
+            "isMaxTimezone": 1,
+            "address1": "5260 Calhoun Memorial Hwy",
+            "address2": "",
+            "city": "Easley"
+        },
+        {
+            "site_id": 4,
+            "code": "PBA2",
+            "latitude": 34.53198,
+            "longitude": -82.696329,
+            "name": "Papa Bear Anderson 2",
+            "timezone": -300,
+            "localSiteTime": "2025-02-03T08:16:00.000Z",
+            "timezoneString": "America/New_York",
+            "isMaxTimezone": 1,
+            "address1": "1500 Pearman Dairy Rd",
+            "address2": null,
+            "city": "Anderson"
+        },
+        {
+            "site_id": 5,
+            "code": "PBG",
+            "latitude": 90,
+            "longitude": 180,
+            "name": "Papa Bear Greenville",
+            "timezone": -300,
+            "localSiteTime": "2025-02-03T08:16:00.000Z",
+            "timezoneString": "America/New_York",
+            "isMaxTimezone": 1,
+            "address1": "2312 Wade Hampton Blvd",
+            "address2": null,
+            "city": "Greenville"
+        }
+    ]
+}
+```
+**Car Washes List**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/site/car-washes-list?page=1&limit=50" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Site car washes data fetched successfully",
+    "data": {
+        "result": [
+            {
+                "Site": "Papa Bear Anderson",
+                "Car": 732,
+                "Labor": 22.79,
+                "Members": 12
+            },
+            {
+                "Site": "Papa Bear Easley",
+                "Car": 698,
+                "Labor": 22.74,
+                "Members": 25
+            },
+            {
+                "Site": "Papa Bear Anderson 2",
+                "Car": 711,
+                "Labor": 32.72,
+                "Members": 30
+            },
+            {
+                "Site": "Papa Bear Greenville",
+                "Car": 327,
+                "Labor": 39.33,
+                "Members": 19
+            }
+        ],
+        "nextPageStatus": false
+    }
+}
+```
+
+**Current Stats**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/site/current-stat" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab" \
+--max-time 600
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Current-Stat get successfully",
+    "data": [
+        {
+            "title": "Cars",
+            "subCategory": "cars",
+            "count": 2468,
+            "previousCount": 2716,
+            "difference": -9.13
+        },
+        {
+            "title": "New Member Count",
+            "subCategory": "membership_count",
+            "count": 86,
+            "previousCount": 123,
+            "difference": -30.08
+        },
+        {
+            "title": "Sales",
+            "subCategory": "sales",
+            "count": 13410,
+            "previousCount": 17205,
+            "difference": -22.06
+        },
+        {
+            "title": "Labor %",
+            "subCategory": "labour_percentage",
+            "count": 27.9,
+            "previousCount": 24.15,
+            "difference": 15.53
+        }
+    ]
+}
+```
 
 ### Analytics
 

@@ -77,6 +77,37 @@ const [state, updateState] = useSimpleReducer({
 - **saveSiteList**: Saves the selected site location through an API request.
 - **AsyncStorage**: Stores the selected site's timezone locally for quick access.
 
+**Site Save**:
+```javascript
+curl -X POST "https://checkpointqa-api.quivio.com/site/site-save" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NjA3NTcsImV4cCI6MTc0MTI1Mjc1N30.cknoFbiY-PPHdXtsLtZzEp0OY3olmZwpCkcrsxPhsBU" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab" \
+-d "{\"siteId\":3,\"siteName\":\"Papa Bear Easley\",\"latitude\":34.826488,\"longitude\":-82.561558,\"timezone\":-300,\"city\":\"Easley\",\"timezoneString\":\"America/New_York\",\"localSiteTime\":\"2025-02-04T05:42:17.000Z\"}"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Site saved successfully",
+    "data": {
+        "siteId": 1,
+        "siteName": "Papa Bear Anderson",
+        "code": "PBA1",
+        "latitude": 34.549367,
+        "longitude": -82.673463,
+        "timezone": -300,
+        "localSiteTime": "2025-02-04T05:47:01.000Z",
+        "timezoneString": "America/New_York",
+        "address1": "3436 Clemson Blvd",
+        "address2": null,
+        "city": "Anderson"
+    }
+}
+```
 
 ### Analytics
 

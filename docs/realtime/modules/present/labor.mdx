@@ -50,6 +50,111 @@ const initialState = {
 
 - **getLaborStats API**: Fetches data on employee hours and costs.
 
+**Labor**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/present/labour?siteId=1" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab" \
+--max-time 600
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "title": "time",
+            "value": [
+                {
+                    "current": "02:00 AM - 03:00 AM",
+                    "label": "This Hour"
+                },
+                {
+                    "current": "Yesterday",
+                    "label": "Today"
+                },
+                {
+                    "current": "Last Week",
+                    "label": "This Week"
+                },
+                {
+                    "current": "Last Month",
+                    "label": "This Month"
+                }
+            ]
+        },
+        {
+            "title": "cars_labor_hour",
+            "value": [
+                {
+                    "current": 0,
+                    "difference": 0
+                },
+                {
+                    "current": 0,
+                    "difference": 0
+                },
+                {
+                    "current": 10.13,
+                    "difference": 21.32
+                },
+                {
+                    "current": 11.22,
+                    "difference": 30.77
+                }
+            ]
+        },
+        {
+            "title": "labor_cost_car",
+            "value": [
+                {
+                    "current": 0,
+                    "difference": 0
+                },
+                {
+                    "current": 0,
+                    "difference": 0
+                },
+                {
+                    "current": 1.22,
+                    "difference": -18.67
+                },
+                {
+                    "current": 1.09,
+                    "difference": -21.58
+                }
+            ]
+        },
+        {
+            "title": "labor_percent",
+            "value": [
+                {
+                    "current": 0,
+                    "difference": 0
+                },
+                {
+                    "current": 0,
+                    "difference": 0
+                },
+                {
+                    "current": 20.26,
+                    "difference": -10.95
+                },
+                {
+                    "current": 18.55,
+                    "difference": -32.3
+                }
+            ]
+        }
+    ]
+}
+```
+
 ## Navigation
 
 Accessible from the dashboard and allows navigation back to the main menu or related screens.

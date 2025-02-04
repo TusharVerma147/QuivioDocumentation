@@ -1,7 +1,7 @@
 
 # Best Sellers
 
-The Best Sellers component in the Historical Screen provides a detailed breakdown of the top-performing products or services at a selected location, offering insights into their performance metrics such as quantity sold and net sales.
+The Best Sellers in the Historical Screen provides a detailed breakdown of the top-performing products or services at a selected location, offering insights into their performance metrics such as quantity sold and net sales.
 
 <figure> <img src="/img/inventory/historicalSellers.png" alt="This is an example image  of best Sellers" width="300" height="600" /></figure>
 
@@ -41,6 +41,53 @@ const [state, updateState] = useSimpleReducer(initialState);
 ### API Integration
 
 - **getBestSellersData**: Fetches best sellers data for the selected date range.
+
+**Best Sellers Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/historical/best-seller?type=2&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NjA3NTcsImV4cCI6MTc0MTI1Mjc1N30.cknoFbiY-PPHdXtsLtZzEp0OY3olmZwpCkcrsxPhsBU" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "response": [
+            {
+                "name": "TIRE SHINE WASH $15",
+                "quantity": 475,
+                "net_sales": 7125
+            },
+            {
+                "name": "FUSION PAINT SEALANT $25",
+                "quantity": 363,
+                "net_sales": 9075
+            },
+            {
+                "name": "HOT WAX WASH $20",
+                "quantity": 294,
+                "net_sales": 5880
+            },
+            {
+                "name": "TIRE SHINE PLAN $24.99",
+                "quantity": 178,
+                "net_sales": 4583.22
+            },
+            {
+                "name": "CERAMIC SHIELD WASH $30",
+                "quantity": 161,
+                "net_sales": 4830
+            }
+        ]
+    }
+}
+```
 
 ## Analytics
 

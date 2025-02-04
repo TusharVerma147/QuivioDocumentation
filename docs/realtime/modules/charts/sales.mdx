@@ -1,7 +1,7 @@
 
 # Sales
 
-The Sales Screen is a React Native component designed to display sales-related data in a graphical and tabular format. It provides users with interactive and detailed visualizations of sales metrics such as gross car count, non-wash sales, and total sales amount across various sites. The screen uses charts, tables, and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Sales Screen.
+The Sales Screen in Charts is designed to display sales-related data in a graphical and tabular format. It provides users with interactive and detailed visualizations of sales metrics such as gross car count, non-wash sales, and total sales amount across various sites. The screen uses charts, tables, and filters to enhance data analysis and user experience. This document provides an overview of the code structure, functionality, and important elements of the Sales Screen.
 
 <figure> <img src="/img/inventory/saleschart.png" alt="This is an example image  of Sales Chart" width="300" height="600" /></figure>
 
@@ -87,30 +87,326 @@ The Sales Screen integrates with APIs to fetch and filter sales data:
 - **getTabData**: Retrieves the tab data from the backend.
 - **getGraphData**: Retrieves the graph data from the backend.
 
+**Tab Data**:
 ```javascript
-const getListData = async (payload?: any) => {
-  updateState({ isListLoading: true });
-  try {
-    const res: any = await networkMethods.getApiCall(endpoint.salesListing, {
-      type: dateFilter?.id,
-      siteId: selectedLocation?.site_id,
-      ...(setSelectedMode?.length > 0
-        ? {
-            startDate:
-              dateFilter?.id !== 2 ? selectedDateDay : selectedStartDate,
-            ...(dateFilter?.id === 2 ? { endDate: selectedEndDate } : {}),
-          }
-        : { ...getCustomDate() }),
-      ...payload,
-    });
-    updateState({ isListLoading: false, isRefreshing: false });
-    const result = res?.data?.data;
-    updateState({ listData: result });
-  } catch (error: any) {
-    updateState({ isListLoading: false, isRefreshing: false });
-  }
-};
+curl -X GET "https://checkpointqa-api.quivio.com/sales/buttons?type=2&isCurrentDate=true&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
 
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "title": "Cars",
+            "subCategory": "cars",
+            "count": 1536,
+            "previousCount": 1238,
+            "difference": 24.07
+        },
+        {
+            "title": "Sales",
+            "subCategory": "sales",
+            "count": 9240,
+            "previousCount": 8180,
+            "difference": 12.96
+        },
+        {
+            "title": "Non-wash$/ car",
+            "subCategory": "non_wash_cost_per_car",
+            "count": 0,
+            "previousCount": 0,
+            "difference": 0
+        }
+    ]
+}
+```
+
+**Graph Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/sales/graph?type=2&graphType=1&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab" \
+--max-time 600
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "current": [
+            {
+                "date": "2025-02-02",
+                "value": 804
+            },
+            {
+                "date": "2025-02-03",
+                "value": 732
+            },
+            {
+                "date": "2025-02-04",
+                "value": 0
+            },
+            {
+                "date": "2025-02-05",
+                "value": 0
+            },
+            {
+                "date": "2025-02-06",
+                "value": 0
+            },
+            {
+                "date": "2025-02-07",
+                "value": 0
+            },
+            {
+                "date": "2025-02-08",
+                "value": 0
+            }
+        ],
+        "previous": [
+            {
+                "date": "2025-01-26",
+                "value": 945
+            },
+            {
+                "date": "2025-01-27",
+                "value": 293
+            },
+            {
+                "date": "2025-01-28",
+                "value": 1006
+            },
+            {
+                "date": "2025-01-29",
+                "value": 859
+            },
+            {
+                "date": "2025-01-30",
+                "value": 647
+            },
+            {
+                "date": "2025-01-31",
+                "value": 446
+            },
+            {
+                "date": "2025-02-01",
+                "value": 1022
+            }
+        ]
+    }
+}
+```
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "current": [
+            {
+                "date": "2025-02-02",
+                "value": 5275
+            },
+            {
+                "date": "2025-02-03",
+                "value": 3965
+            },
+            {
+                "date": "2025-02-04",
+                "value": 0
+            },
+            {
+                "date": "2025-02-05",
+                "value": 0
+            },
+            {
+                "date": "2025-02-06",
+                "value": 0
+            },
+            {
+                "date": "2025-02-07",
+                "value": 0
+            },
+            {
+                "date": "2025-02-08",
+                "value": 0
+            }
+        ],
+        "previous": [
+            {
+                "date": "2025-01-26",
+                "value": 6990
+            },
+            {
+                "date": "2025-01-27",
+                "value": 1190
+            },
+            {
+                "date": "2025-01-28",
+                "value": 4995
+            },
+            {
+                "date": "2025-01-29",
+                "value": 4780
+            },
+            {
+                "date": "2025-01-30",
+                "value": 3385
+            },
+            {
+                "date": "2025-01-31",
+                "value": 2395
+            },
+            {
+                "date": "2025-02-01",
+                "value": 5855
+            }
+        ]
+    }
+}
+```
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "current": [
+            {
+                "date": "2025-02-02",
+                "value": 0
+            },
+            {
+                "date": "2025-02-03",
+                "value": 0
+            },
+            {
+                "date": "2025-02-04",
+                "value": 0
+            },
+            {
+                "date": "2025-02-05",
+                "value": 0
+            },
+            {
+                "date": "2025-02-06",
+                "value": 0
+            },
+            {
+                "date": "2025-02-07",
+                "value": 0
+            },
+            {
+                "date": "2025-02-08",
+                "value": 0
+            }
+        ],
+        "previous": [
+            {
+                "date": "2025-01-26",
+                "value": 0
+            },
+            {
+                "date": "2025-01-27",
+                "value": 0
+            },
+            {
+                "date": "2025-01-28",
+                "value": 0
+            },
+            {
+                "date": "2025-01-29",
+                "value": 0
+            },
+            {
+                "date": "2025-01-30",
+                "value": 0
+            },
+            {
+                "date": "2025-01-31",
+                "value": 0
+            },
+            {
+                "date": "2025-02-01",
+                "value": 0
+            }
+        ]
+    }
+}
+```
+
+**List Data**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/sales/list?type=2&siteId=1&startDate=2025-02-02&endDate=2025-02-08" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "date": "2025-02-02",
+            "grossCarCount": 804,
+            "totalSalesAmount": 5275,
+            "nonWash": 0
+        },
+        {
+            "date": "2025-02-03",
+            "grossCarCount": 732,
+            "totalSalesAmount": 3965,
+            "nonWash": 0
+        },
+        {
+            "date": "2025-02-04",
+            "grossCarCount": 0,
+            "totalSalesAmount": 0,
+            "nonWash": 0
+        },
+        {
+            "date": "2025-02-05",
+            "grossCarCount": 0,
+            "totalSalesAmount": 0,
+            "nonWash": 0
+        },
+        {
+            "date": "2025-02-06",
+            "grossCarCount": 0,
+            "totalSalesAmount": 0,
+            "nonWash": 0
+        },
+        {
+            "date": "2025-02-07",
+            "grossCarCount": 0,
+            "totalSalesAmount": 0,
+            "nonWash": 0
+        },
+        {
+            "date": "2025-02-08",
+            "grossCarCount": 0,
+            "totalSalesAmount": 0,
+            "nonWash": 0
+        }
+    ]
+}
 ```
 
 ### Chart Configuration

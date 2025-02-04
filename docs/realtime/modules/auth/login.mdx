@@ -69,6 +69,42 @@ const [state, updateState] = useSimpleReducer({
 
 The loginApi is dispatched with a payload containing the username, password, and organization code. Successful responses store data in Redux and AsyncStorage.
 
+**To Login**:
+```javascript
+curl --location 'https://checkpointqa-api.quivio.com/onboarding/login' \
+--header 'deviceid: {{deviceid}}' \
+--header 'timezone: 330' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic WFlaOlh5ekAxMjM0' \
+--data '{
+  "userName": "dev1",
+  "password": "temp1234",
+  "orgCode": "papabear"
+}'
+```
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": {
+        "userId": 994396,
+        "userName": "dev1",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiJ7e2RldmljZWlkfX0iLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg1ODcwNDEsImV4cCI6MTc0MTE3OTA0MX0.vjjD0g540Dxv_fjpgW1qGxsBQMKUPUKW4ULy3ZCQzp4",
+        "siteId": 1,
+        "siteName": "Papa Bear Anderson",
+        "code": "PBA1",
+        "latitude": 34.549367,
+        "longitude": -82.673463,
+        "timezone": -300,
+        "localSiteTime": "2025-02-03T07:50:41.000Z",
+        "timezoneString": "America/New_York",
+        "address1": "3436 Clemson Blvd",
+        "address2": null,
+        "city": "Anderson"
+    }
+}
+```
 ### Analytics
 
 Logs events for login clicks, success, and failure using AnalyticsService.

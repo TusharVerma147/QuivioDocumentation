@@ -1,7 +1,7 @@
 
-# Historical
+# Historical Overview
 
-The Historical Screen is a React Native component designed to display detailed historical data and analytics about a site’s performance. It allows users to view and analyze key metrics such as cars washed, memberships, weekly stats, top greeters, and best sellers. This document provides an overview of the code structure, functionality, and important elements of the Historical Screen.
+The Historical Screen is  designed to display detailed historical data and analytics about a site’s performance. It allows users to view and analyze key metrics such as cars washed, memberships, weekly stats, top greeters, and best sellers and weather data. This document provides an overview of the code structure, functionality, and important elements of the Historical Screen.
 
 <figure> <img src="/img/inventory/historical.png" alt="This is an example image  of  Historical Data" width="300" height="600" /></figure>
 
@@ -10,6 +10,7 @@ The Historical Screen is a React Native component designed to display detailed h
 The Present Stats module provides real-time updates on:
 
 - View detailed historical analytics, including cars washed, memberships, and weekly stats.
+- Display current and historical weather conditions for the site.
 - Identify top-performing greeters and best-selling items.
 - Filter data based on custom date ranges.
 - Navigate through tabs for each metric.
@@ -26,6 +27,13 @@ The Present Stats module provides real-time updates on:
 - **API Integration**: Fetches and updates historical data dynamically from the server.
 - **Pull-to-Refresh**: Refreshes the displayed data with a pull-to-refresh gesture.
 - **Custom Date Filtering**: Allows users to filter data by selecting custom date ranges.
+
+## Weather Data Features
+
+- **Current Weather**: Displays the current weather conditions, including temperature, precipitation, and pollen levels.
+- **Historical Weather**: Shows historical weather data for the selected date range.
+- **Hourly Weather**: Provides hourly weather updates for the current day.
+- **Weekly Weather**: Displays weather trends for the selected week.
 
 ## Code Structure
 
@@ -66,6 +74,134 @@ const [state, updateState] = useSimpleReducer(initialState);
 ### API Integration
 
 - **getHistoricalDataAPI**: Fetches historical data for the selected tab and date range.
+- **getWeatherDataAPI**: Fetches Weather data for the site with foreacsting and also current and weekly weather.
+
+**Weather Data**:
+```javascript
+curl -X GET "https://api.open-meteo.com/v1/forecast?latitude=34.549367&longitude=-82.673463&start_date=2025-02-02&end_date=2025-02-08&daily=sunrise,sunset,temperature_2m_mean,rain_sum,snowfall_sum,precipitation_probability_max,weather_code,temperature_2m_max,temperature_2m_min&timezone=America/New_York&temperature_unit=fahrenheit&precipitation_unit=inch&apikey=q1t9EmjTsvCgizyN" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NjA3NTcsImV4cCI6MTc0MTI1Mjc1N30.cknoFbiY-PPHdXtsLtZzEp0OY3olmZwpCkcrsxPhsBU" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab"
+```
+
+**Response**:
+```javascript
+{
+    "latitude": 34.548656,
+    "longitude": -82.67149,
+    "generationtime_ms": 0.720977783203125,
+    "utc_offset_seconds": -18000,
+    "timezone": "America/New_York",
+    "timezone_abbreviation": "GMT-5",
+    "elevation": 237,
+    "daily_units": {
+        "time": "iso8601",
+        "sunrise": "iso8601",
+        "sunset": "iso8601",
+        "temperature_2m_mean": "°F",
+        "rain_sum": "inch",
+        "snowfall_sum": "inch",
+        "precipitation_probability_max": "%",
+        "weather_code": "wmo code",
+        "temperature_2m_max": "°F",
+        "temperature_2m_min": "°F"
+    },
+    "daily": {
+        "time": [
+            "2025-02-02",
+            "2025-02-03",
+            "2025-02-04",
+            "2025-02-05",
+            "2025-02-06",
+            "2025-02-07",
+            "2025-02-08"
+        ],
+        "sunrise": [
+            "2025-02-02T07:27",
+            "2025-02-03T07:26",
+            "2025-02-04T07:25",
+            "2025-02-05T07:24",
+            "2025-02-06T07:24",
+            "2025-02-07T07:23",
+            "2025-02-08T07:22"
+        ],
+        "sunset": [
+            "2025-02-02T18:01",
+            "2025-02-03T18:02",
+            "2025-02-04T18:03",
+            "2025-02-05T18:04",
+            "2025-02-06T18:05",
+            "2025-02-07T18:06",
+            "2025-02-08T18:07"
+        ],
+        "temperature_2m_mean": [
+            49.6,
+            52.6,
+            63.7,
+            55.4,
+            57.7,
+            64.4,
+            63.8
+        ],
+        "rain_sum": [
+            0,
+            0,
+            0,
+            0.043,
+            0.063,
+            0,
+            0.004
+        ],
+        "snowfall_sum": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "precipitation_probability_max": [
+            0,
+            0,
+            0,
+            62,
+            62,
+            23,
+            20
+        ],
+        "weather_code": [
+            45,
+            1,
+            0,
+            55,
+            53,
+            3,
+            51
+        ],
+        "temperature_2m_max": [
+            61.1,
+            70.9,
+            80.1,
+            62.3,
+            70.1,
+            72.9,
+            74
+        ],
+        "temperature_2m_min": [
+            43.3,
+            36.7,
+            52.4,
+            47.3,
+            47.9,
+            57.4,
+            56.3
+        ]
+    }
+}
+```
 
 ## Analytics
 

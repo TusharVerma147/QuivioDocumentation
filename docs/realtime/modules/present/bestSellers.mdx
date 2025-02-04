@@ -46,6 +46,53 @@ const initialState = {
 
 - **getBestSellers API**: Fetches data on top-selling products.
 
+**Best Sellers**:
+```javascript
+curl -X GET "https://checkpointqa-api.quivio.com/present/best-seller?siteId=1" \
+-H "Accept: application/json, text/plain, */*" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjk5NDM5NiwidXNlck5hbWUiOiJkZXYxIiwiZGV2aWNlSWQiOiI2MTNlY2UxYi1jNTIyLTRhNzktYTA4YS04NGY1YmUxNzIxYWIiLCJzdWJkb21haW5fcXVhbGlmaWVyIjoicGFwYWJlYXIiLCJpYXQiOjE3Mzg2NDUwNTYsImV4cCI6MTc0MTIzNzA1Nn0.y33z3GsVOFLJfpsub8gPHS_VoWlfp4CT5jQmlar1Djw" \
+-H "timezone: -300" \
+-H "deviceid: 613ece1b-c522-4a79-a08a-84f5be1721ab" \
+--max-time 600 \
+--compressed
+```
+
+**Response**:
+```javascript
+{
+    "statusCode": 200,
+    "message": "Success.",
+    "data": [
+        {
+            "name": "TIRE SHINE PLAN $24.99",
+            "quantity": 61,
+            "net_sales": 1589.36
+        },
+        {
+            "name": "FUSION PAINT SEALANT PLAN $34.99",
+            "quantity": 42,
+            "net_sales": 1574.53
+        },
+        {
+            "name": "HOT WAX PLAN $29.99",
+            "quantity": 31,
+            "net_sales": 969.67
+        },
+        {
+            "name": "CERAMIC SHIELD PLAN $39.99",
+            "quantity": 20,
+            "net_sales": 974.73
+        },
+        {
+            "name": "GRAPHENE MONTHLY PLAN $49.99",
+            "quantity": 19,
+            "net_sales": 1049.77
+        }
+    ]
+}
+```
+
 ## Navigation
 
 Accessible through the dashboard, with links to detailed product pages.
