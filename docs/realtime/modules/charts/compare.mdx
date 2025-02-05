@@ -88,7 +88,7 @@ The Compare Screen integrates with APIs to fetch and filter comparative data:
 - **getCompareData**: Retrieves the labor data from the backend.
 - **getGraphData**: Retrieves the graph data from the backend.
 
-**Tab Data**:
+**Tab Data Sales**:
 ```javascript
 curl -X GET "https://checkpointqa-api.quivio.com/compare/tab?siteId=1&categoryType=1&isCurrentDate=true&dateFilter=2&startDate=2025-02-02&endDate=2025-02-08&compareWith=1&periodType=1" \
 -H "Accept: application/json, text/plain, */*" \
@@ -128,6 +128,7 @@ curl -X GET "https://checkpointqa-api.quivio.com/compare/tab?siteId=1&categoryTy
     ]
 }
 ```
+Similary Curl request and Response are generated for Labor and Membership Tab data.
 
 **Graph Data**:
 ```javascript
@@ -208,6 +209,7 @@ curl -X GET "https://checkpointqa-api.quivio.com/compare/graph?siteId=1&category
     }
 }
 ```
+Similary Curl request and Response are generated for Labor and Membership Graph data with different categories in it.
 
 ### Chart Configuration
 
